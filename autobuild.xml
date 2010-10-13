@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<llsd>
+  <map>
+    <key>colladadom</key>
+    <map>
+      <key>build</key>
+      <map>
+        <key>windows</key>
+        <map>
+          <key>command</key>
+          <string>bash build-cmd.sh</string>
+          <key>directory</key>
+          <string>stage</string>
+        </map>
+      </map>
+      <key>license</key>
+      <string>SCEA</string>
+      <key>licensefile</key>
+      <string>LICENSES/collada.txt</string>
+      <key>manifest</key>
+      <map>
+        <key>common</key>
+        <map>
+          <key>files</key>
+          <array>
+            <string>libraries/include/collada</string>
+            <string>LICENSES/collada.txt</string>
+            <string>LICENSES/collada_other</string>
+          </array>
+        </map>
+        <key>windows</key>
+        <map>
+          <key>files</key>
+          <array>
+            <string>libraries/i686-win32/lib/debug/*.lib</string>
+            <string>libraries/i686-win32/lib/debug/*.dll</string>
+            <string>libraries/i686-win32/lib/release/*.lib</string>
+            <string>libraries/i686-win32/lib/release/*.dll</string>
+          </array>
+        </map>
+      </map>
+      <key>sourcedir</key>
+      <string>.</string>
+      <key>uploadtos3</key>
+      <boolean>true</boolean>
+      <key>version</key>
+      <string>2.1</string>
+    </map>
+  </map>
+</llsd>
