@@ -25,13 +25,13 @@ case "$AUTOBUILD_PLATFORM" in
         
 		mkdir -p stage/libraries/i686-win32/lib/{debug,release}
 		cp "external-libs/boost/lib/vc8/libboost_filesystem-d.lib" \
-				"stage/libraries/i686-win32/lib/debug/libboost_filesystem.lib"
+				"stage/libraries/i686-win32/lib/debug/libboost_filesystem-d.lib"
 		cp "external-libs/boost/lib/vc8/libboost_system-d.lib" \
-				"stage/libraries/i686-win32/lib/debug/libboost_system.lib"
+				"stage/libraries/i686-win32/lib/debug/libboost_system-d.lib"
 		cp "build/vc8-1.4-d/libcollada14dom21-d.lib" \
-				"stage/libraries/i686-win32/lib/debug/libcollada14dom21.lib"
+				"stage/libraries/i686-win32/lib/debug/libcollada14dom21-d.lib"
 		cp "build/vc8-1.4-d/libcollada14dom21-d.dll" \
-				"stage/libraries/i686-win32/lib/debug/libcollada14dom21.dll"
+				"stage/libraries/i686-win32/lib/debug/libcollada14dom21-d.dll"
 				
 		
 
