@@ -8,7 +8,7 @@
         <key>windows</key>
         <map>
           <key>command</key>
-          <string>bash build-cmd.sh</string>
+          <string>bash build_cmd.sh</string>
           <key>directory</key>
           <string>stage</string>
         </map>
@@ -25,7 +25,7 @@
           <array>
             <string>libraries/include/collada</string>
             <string>LICENSES/collada.txt</string>
-            <string>LICENSES/collada_other</string>
+            <string>LICENSES/collada-other/*.txt</string>
           </array>
         </map>
         <key>windows</key>

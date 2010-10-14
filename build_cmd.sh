@@ -20,20 +20,30 @@ set -x
 
 case "$AUTOBUILD_PLATFORM" in
     "windows")
-        build_sln "projects/vc8/dom.sln" "Debug"
-        build_sln "projects/vc8/dom.sln" "Release"
+        build_sln "projects/vc8/dom.sln" "Debug 1.4"
+        build_sln "projects/vc8/dom.sln" "Release 1.4"
         
 		mkdir -p stage/libraries/i686-win32/lib/{debug,release}
-        cp "lib/debug/glod.lib" \
-            "stage/libraries/i686-win32/lib/debug/glod.lib"
-        cp "lib/debug/glod.dll" \
-            "stage/libraries/i686-win32/lib/debug/glod.dll"
-        cp "src/api/debug/glod.pdb" \
-            "stage/libraries/i686-win32/lib/debug/glod.pdb"
-        cp "lib/release/glod.lib" \
-            "stage/libraries/i686-win32/lib/release/glod.lib"
-        cp "lib/release/glod.dll" \
-            "stage/libraries/i686-win32/lib/release/glod.dll"
+		cp "external-libs/boost/lib/vc8/libboost_filesystem-d.lib" \
+				"stage/libraries/i686-win32/lib/debug/libboost_filesystem.lib"
+		cp "external-libs/boost/lib/vc8/libboost_system-d.lib" \
+				"stage/libraries/i686-win32/lib/debug/libboost_system.lib"
+		cp "build/vc8-1.4-d/libcollada14dom21-d.lib" \
+				"stage/libraries/i686-win32/lib/debug/libcollada14dom21.lib"
+		cp "build/vc8-1.4-d/libcollada14dom21-d.dll" \
+				"stage/libraries/i686-win32/lib/debug/libcollada14dom21.dll"
+				
+		
+
+		cp "external-libs/boost/lib/vc8/libboost_filesystem.lib" \
+				"stage/libraries/i686-win32/lib/release/libboost_filesystem.lib"
+		cp "external-libs/boost/lib/vc8/libboost_system.lib" \
+				"stage/libraries/i686-win32/lib/release/libboost_system.lib"
+		cp "build/vc8-1.4/libcollada14dom21.lib" \
+				"stage/libraries/i686-win32/lib/release/libcollada14dom21.lib"
+		cp "build/vc8-1.4/libcollada14dom21.dll" \
+				"stage/libraries/i686-win32/lib/release/libcollada14dom21.dll"			
+        
     ;;
 #        "darwin")
 #			libdir="$top/stage/libraries/universal-darwin/"
@@ -62,10 +72,13 @@ case "$AUTOBUILD_PLATFORM" in
 #				"$libdir/lib_release_client/libllconvexdecompositionstub.a"
 #        ;;
 esac
-mkdir -p "stage/libraries/include/glod"
-cp "include/glod.h" "stage/libraries/include/glod/glod.h"
+mkdir -p "stage/libraries/include/"
+cp -R "include" "stage/libraries/include/collada"
 mkdir -p stage/LICENSES
-cp LICENSE stage/LICENSES/GLOD.txt
+cp "license/scea-shared-source-lic1.0.txt" "stage/LICENSES/collada.txt"
+mkdir -p stage/LICENSES/collada-other
+cp "license/boost-license.txt" "stage/LICENSES/collada-other/boost-license.txt"
+cp "license/pcre-license.txt" "stage/LICENSES/collada-other/pcre-license.txt"
 
 pass
 
