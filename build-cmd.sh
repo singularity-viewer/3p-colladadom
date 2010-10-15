@@ -55,19 +55,15 @@ case "$AUTOBUILD_PLATFORM" in
 				"$libdir/lib_debug/libboost_system.a"
 			cp "external-libs/boost/lib/mac/libboost_filesystem.a" \
 				"$libdir/lib_debug/libboost_filesystem.a"
-			cp "build/mac-1.4-d/Collada4Dom-d.dylib" \
+			cp "build/mac-1.4-d/Collada14Dom-d.dylib" \
 				"$libdir/lib_debug/Collada4Dom-d.dylib"
-			cp "build/mac-1.4-d/Collada4Dom-d.framework" \
-				"$libdir/lib_debug/Collada4Dom-d.framework"
 
 			cp "external-libs/boost/lib/mac/libboost_system.a" \
 				"$libdir/lib_release/libboost_system.a"
 			cp "external-libs/boost/lib/mac/libboost_filesystem.a" \
 				"$libdir/lib_release/libboost_filesystem.a"
-			cp "build/mac-1.4/Collada4Dom.dylib" \
+			cp "build/mac-1.4/Collada14Dom.dylib" \
 				"$libdir/lib_release/Collada4Dom.dylib"
-			cp "build/mac-1.4/Collada4Dom.framework" \
-				"$libdir/lib_release/Collada4Dom.framework"
 		;;
         "linux")
 			libdir="$top/stage/libraries/i686-linux/"
