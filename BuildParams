@@ -1,0 +1,4 @@
+PACKAGE_NAME = colladadom
+public_build = false
+build_legacy_package = false
+AUTOBUILD_VSVER=100
