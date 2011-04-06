@@ -27,7 +27,7 @@ case "$AUTOBUILD_PLATFORM" in
         build_sln "projects/vc8/dom.sln" "Debug 1.4"
         build_sln "projects/vc8/dom.sln" "Release 1.4"
         
-		mkdir -p stage/libraries/i686-win32/lib/{debug,release}
+		mkdir -p stage/lib/{debug,release}
 		cp "external-libs/boost/lib/vc8/libboost_filesystem-d.lib" \
 				"stage/lib/debug/libboost_filesystem-d.lib"
 		cp "external-libs/boost/lib/vc8/libboost_system-d.lib" \
@@ -51,7 +51,7 @@ case "$AUTOBUILD_PLATFORM" in
     ;;
         "darwin")
 			libdir="$top/stage"
-            mkdir -p "$libdir"/lib_{debug,release}
+            mkdir -p "$libdir"/lib/{debug,release}
 			make
 
 			cp "external-libs/boost/lib/mac/libboost_system.a" \
@@ -70,7 +70,7 @@ case "$AUTOBUILD_PLATFORM" in
 		;;
         "linux")
 			libdir="$top/stage"
-            mkdir -p "$libdir"/lib_{debug,release}_client
+            mkdir -p "$libdir"/lib/{debug,release}
 			make 
 
 			cp "external-libs/boost/lib/mingw/libboost_filesystem.a" \
