@@ -13,6 +13,9 @@ if [ "$OSTYPE" = "cygwin" ] ; then
     export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
 fi
 
+#execute build from top-level checkout
+cd "$(dirname "$0")"
+
 # load autbuild provided shell functions and variables
 set +x
 eval "$("$AUTOBUILD" source_environment)"

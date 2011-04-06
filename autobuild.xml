@@ -16,6 +16,23 @@
         </map>
         <key>common</key>
         <map>
+          <key>configurations</key>
+          <map>
+            <key>RelWithDebInfo</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>command</key>
+                <string>bash</string>
+                <key>options</key>
+                <array>
+                  <string>../build-cmd.sh</string>
+                </array>
+              </map>
+              <key>name</key>
+              <string>RelWithDebInfo</string>
+            </map>
+          </map>
           <key>manifest</key>
           <array>
             <string>include/collada</string>
