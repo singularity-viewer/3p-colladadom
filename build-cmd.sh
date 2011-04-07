@@ -24,8 +24,8 @@ top="$(pwd)"
 
 case "$AUTOBUILD_PLATFORM" in
     "windows")
-        build_sln "projects/vc8/dom.sln" "Debug 1.4"
-        build_sln "projects/vc8/dom.sln" "Release 1.4"
+        build_sln "projects/vc8/dom.sln" "Debug 1.4|Win32"
+        build_sln "projects/vc8/dom.sln" "Release 1.4|Win32"
         
 		mkdir -p stage/lib/{debug,release}
 		cp "external-libs/boost/lib/vc8/libboost_filesystem-d.lib" \
