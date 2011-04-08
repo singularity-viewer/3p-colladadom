@@ -56,7 +56,7 @@ endif
 arch := $(nativeArch)
 
 # project: 'dom', 'domTest', or 'all'
-project := dom
+project := minizip dom
 
 # Release/debug configuration: 'release', 'debug', or 'all'
 conf := release
