@@ -1,15 +1,10 @@
 /*
- * Copyright 2006 Sony Computer Entertainment Inc.
- *
- * Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://research.scea.com/scea_shared_source_license.html
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing permissions and limitations under the 
- * License. 
- */
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 
 #include <sstream>
 #include <dae/daeAtomicType.h>
@@ -79,7 +74,8 @@ daeAtomicTypeList::daeAtomicTypeList(DAE& dae) {
 }
 
 daeAtomicTypeList::~daeAtomicTypeList() {
-	for (size_t i = 0; i < types.getCount(); i++)
+	size_t types_count = types.getCount();
+	for (size_t i = 0; i < types_count; i++)
 		delete types[i];
 }
 
@@ -96,9 +92,11 @@ daeInt daeAtomicTypeList::getCount() {
 }
 
 daeAtomicType* daeAtomicTypeList::get(daeStringRef typeString) {
-	for (size_t i = 0; i < types.getCount(); i++) {
+	size_t types_count = types.getCount();
+	for (size_t i = 0; i < types_count; i++) {
 		daeStringRefArray& nameBindings = types[i]->getNameBindings();
-		for (size_t j = 0; j < nameBindings.getCount(); j++) {
+		size_t nameBindings_count = nameBindings.getCount();
+		for (size_t j = 0; j < nameBindings_count; j++) {
 			if (strcmp(typeString, nameBindings[j]) == 0)
 				return types[i];
 		}
@@ -108,7 +106,8 @@ daeAtomicType* daeAtomicTypeList::get(daeStringRef typeString) {
 }
 
 daeAtomicType* daeAtomicTypeList::get(daeEnum typeEnum) {
-	for (size_t i = 0; i < types.getCount(); i++)
+	size_t types_count = types.getCount();
+	for (size_t i = 0; i < types_count; i++)
 		if (typeEnum == types[i]->getTypeEnum())
 			return types[i];
 	return NULL;
@@ -137,7 +136,9 @@ daeAtomicType::stringToMemory(daeChar *src, daeChar* dstMemory)
 void daeAtomicType::arrayToString(daeArray& array, std::ostringstream& buffer) {
 	if (array.getCount() > 0)
 		memoryToString(array.getRaw(0), buffer);
-	for (size_t i = 1; i < array.getCount(); i++) {
+
+	size_t array_count = array.getCount();
+	for (size_t i = 1; i < array_count; i++) {
 		buffer << ' ';
 		memoryToString(array.getRaw(i), buffer);
 	}
@@ -168,9 +169,9 @@ daeAtomicType::stringToArray(daeChar* src, daeArray& array) {
 			src = skipToken(src);
 			daeChar temp = *src;
 			*src = 0;
-
-			array.setCount(array.getCount()+1);
-			if (!stringToMemory(token, array.getRaw(array.getCount()-1))) {
+			size_t count = array.getCount();
+			array.setCount(count+1);
+			if (!stringToMemory(token, array.getRaw(count))) {
 				delete[] srcDup;
 				return false;
 			}
@@ -187,7 +188,8 @@ daeInt daeAtomicType::compareArray(daeArray& value1, daeArray& value2) {
 	if (value1.getCount() != value2.getCount())
 		return value1.getCount() > value2.getCount() ? 1 : -1;
 
-	for (size_t i = 0; i < value1.getCount(); i++) {
+	size_t value1_count = value1.getCount();
+	for (size_t i = 0; i < value1_count; i++) {
 		daeInt result = compare(value1.getRaw(i), value2.getRaw(i));
 		if (result != 0)
 			return result;
@@ -198,7 +200,8 @@ daeInt daeAtomicType::compareArray(daeArray& value1, daeArray& value2) {
 
 void daeAtomicType::copyArray(daeArray& src, daeArray& dst) {
 	dst.setCount(src.getCount());
-	for (size_t i = 0; i < src.getCount(); i++)
+	size_t src_count = src.getCount();
+	for (size_t i = 0; i < src_count; i++)
 		copy(src.getRaw(i), dst.getRaw(i));
 }
 

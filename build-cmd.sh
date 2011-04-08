@@ -24,29 +24,29 @@ top="$(pwd)"
 
 case "$AUTOBUILD_PLATFORM" in
     "windows")
-        build_sln "projects/vc8/dom.sln" "Debug 1.4|Win32"
-        build_sln "projects/vc8/dom.sln" "Release 1.4|Win32"
+        build_sln "projects/vc10-1.4/dom.sln" "Debug|Win32"
+        build_sln "projects/vc10-1.4/dom.sln" "Release|Win32"
         
 		mkdir -p stage/lib/{debug,release}
-		cp "external-libs/boost/lib/vc8/libboost_filesystem-d.lib" \
+		cp "external-libs/boost/lib/vc10/libboost_filesystem-d.lib" \
 				"stage/lib/debug/libboost_filesystem-d.lib"
-		cp "external-libs/boost/lib/vc8/libboost_system-d.lib" \
+		cp "external-libs/boost/lib/vc10/libboost_system-d.lib" \
 				"stage/lib/debug/libboost_system-d.lib"
-		cp "build/vc8-1.4-d/libcollada14dom21-d.lib" \
-				"stage/lib/debug/libcollada14dom21-d.lib"
-		cp "build/vc8-1.4-d/libcollada14dom21-d.dll" \
-				"stage/lib/debug/libcollada14dom21-d.dll"
+		cp "build/vc10-1.4-d/libcollada14dom22-d.lib" \
+				"stage/lib/debug/libcollada14dom22-d.lib"
+		cp "build/vc10-1.4-d/libcollada14dom22-d.dll" \
+				"stage/lib/debug/libcollada14dom22-d.dll"
 				
 		
 
-		cp "external-libs/boost/lib/vc8/libboost_filesystem.lib" \
+		cp "external-libs/boost/lib/vc10/libboost_filesystem.lib" \
 				"stage/lib/release/libboost_filesystem.lib"
-		cp "external-libs/boost/lib/vc8/libboost_system.lib" \
+		cp "external-libs/boost/lib/vc10/libboost_system.lib" \
 				"stage/lib/release/libboost_system.lib"
-		cp "build/vc8-1.4/libcollada14dom21.lib" \
-				"stage/lib/release/libcollada14dom21.lib"
-		cp "build/vc8-1.4/libcollada14dom21.dll" \
-				"stage/lib/release/libcollada14dom21.dll"			
+		cp "build/vc10-1.4/libcollada14dom22.lib" \
+				"stage/lib/release/libcollada14dom22.lib"
+		cp "build/vc10-1.4/libcollada14dom22.dll" \
+				"stage/lib/release/libcollada14dom22.dll"			
         
     ;;
         "darwin")
@@ -103,10 +103,12 @@ esac
 mkdir -p "stage/include/collada"
 cp -R "include" "stage/include/collada"
 mkdir -p stage/LICENSES
-cp "license/scea-shared-source-lic1.0.txt" "stage/LICENSES/collada.txt"
+cp "license.txt" "stage/LICENSES/collada.txt"
 mkdir -p stage/LICENSES/collada-other
-cp "license/boost-license.txt" "stage/LICENSES/collada-other/boost-license.txt"
-cp "license/pcre-license.txt" "stage/LICENSES/collada-other/pcre-license.txt"
+cp "license/boost-license.txt" "stage/LICENSES/collada-other"
+cp "license/pcre-license.txt" "stage/LICENSES/collada-other"
+cp "license/minizip-license.txt" "stage/LICENSES/collada-other"
+cp "license/tinyxml-license.txt" "stage/LICENSES/collada-other"
 
 pass
 

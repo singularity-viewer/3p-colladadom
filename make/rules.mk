@@ -1,13 +1,9 @@
+#
 # Copyright 2006 Sony Computer Entertainment Inc.
 #
-# Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
-# file except in compliance with the License. You may obtain a copy of the License at:
-# http://research.scea.com/scea_shared_source_license.html
-#
-# Unless required by applicable law or agreed to in writing, software distributed under the License 
-# is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-# implied. See the License for the specific language governing permissions and limitations under the 
-# License. 
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+# 
 #
 
 # If we're building a lib of any sort libVersion will be set to a version number
@@ -52,15 +48,22 @@ $(obj): includeOpts := $(includeOpts)
 define createObjRule
 srcPath := $(1)
 
-# Pick off the matching obj files
-objFiles := $$(addprefix $$(objPath),$$(notdir $$(filter $$(srcPath)%,$$(src:.cpp=.o))))
+# Pick off the matching obj files. First generate a list of all the src files,
+# except with srcPath as the directory.
+srcPathSrcs := $$(addprefix $$(srcPath),$$(notdir $$(src)))
+# Filter this list of files against the src list, to get only the source files
+# that are actually in srcPath.
+srcPathSrcs := $$(filter $$(srcPathSrcs),$$(src))
+# To get the list of object files, replace the dir of srcPathSrcs with the
+# object file output dir, and replace the file extension with .o.
+objFiles := $$(addprefix $$(objPath),$$(notdir $$(srcPathSrcs:.cpp=.o)))
 
 # We're going to automatically generate make rules for our header dependencies.
 # See this for more info: http://www.cs.berkeley.edu/~smcpeak/autodepend/autodepend.html
 # When using the -M option to generate dependency info, we can't have any -arch flags or
 # gcc complains.
 $$(objFiles): $$(objPath)%.o: $$(srcPath)%.cpp | $$(sort $$(dir $$(objFiles)))
-	@echo Compiling $$< to $$@
+	$$(call printMessage,Compiling $$< to $$@)
 	$$(cc) -c $$< $$(ccFlags) $$(includeOpts) -o $$@
 	@$$(cc) -MM $$< $$(ccFlagsNoArch) $$(includeOpts) > $$(@:.o=.d)
 	@mv -f $$(@:.o=.d) $$(@:.o=.d.tmp)
@@ -78,7 +81,7 @@ endif
 ifneq ($(staticLib),)
 $(staticLib): ar := $(ar)
 $(staticLib): $(obj) | $(dir $(staticLib))
-	@echo Creating $@
+	$(call printMessage,Creating $@)
 	$(ar) $@ $^
 endif
 
@@ -90,7 +93,7 @@ $(sharedLibMajorMinor): cc := $(cc)
 $(sharedLibMajorMinor): ccFlags := $(ccFlags)
 $(sharedLibMajorMinor): libOpts := $(libOpts)
 $(sharedLibMajorMinor): $(dependentLibs) $(obj) | $(dir $(sharedLibMajorMinor))
-	@echo Linking $@
+	$(call printMessage,Linking $@)
 	$(cc) $(ccFlags) -shared -o $@ $^ $(libOpts)
 
 $(sharedLibMajor): $(sharedLibMajorMinor) | $(dir $(sharedLibMajor))
@@ -106,7 +109,7 @@ $(dll): cc := $(cc)
 $(dll): ccFlags := $(ccFlags)
 $(dll): libOpts := $(libOpts)
 $(dll): $(dependentLibs) $(obj) | $(dir $(dll))
-	@echo Linking $@
+	$(call printMessage,Linking $@)
 	$(cc) $(ccFlags) -Wl,--out-implib,$(@:.dll=.lib) -shared -o $@ $^ $(libOpts)
 endif
 
@@ -117,7 +120,7 @@ $(dylib): ccFlags := $(ccFlags)
 $(dylib): libOpts := $(libOpts)
 $(dylib): libVersion := $(libVersion)
 $(dylib): $(dependentLibs) $(obj) | $(dir $(dylib))
-	@echo Linking $@
+	$(call printMessage,Linking $@)
 	$(cc) $(ccFlags) -dynamiclib -install_name $(notdir $@) -current_version $(libVersion).0 \
 		-compatibility_version $(libVersion).0 -o $@ $^ $(libOpts)
 endif
@@ -132,7 +135,7 @@ $(framework): frameworkCurVersionPath := $(framework)/Versions/$(libVersion)
 $(framework): copyFrameworkHeadersCommand := $(copyFrameworkHeadersCommand)
 $(framework): copyFrameworkResourcesCommand := $(copyFrameworkResourcesCommand)
 $(framework): $(dylib)
-	@echo Creating framework $@
+	$(call printMessage,Creating framework $@)
 # First remove the framework folder if it's already there. Otherwise we get errors about
 # files already existing and such.
 	rm -rf $(framework)
@@ -161,10 +164,14 @@ $(exe): cc := $(cc)
 $(exe): ccFlags := $(ccFlags)
 $(exe): obj := $(obj)
 $(exe): libOpts := $(libOpts)
+ifneq ($(oldMakeExport),yes)
 $(exe): sharedLibSearchPathCommand := $(addprefix -Wl$(comma)-rpath$(comma),$(sharedLibSearchPaths))
+else
+$(exe): sharedLibSearchPathCommand :=
+endif
 $(exe): postCreateExeCommand := $(postCreateExeCommand)
 $(exe): $(dependentLibs) $(obj) | $(dir $(exe))
-	@echo Linking $@
+	$(call printMessage,Linking $@)
 	$(cc) $(ccFlags) -o $@ $(obj) $(libOpts) $(sharedLibSearchPathCommand)
 	$(postCreateExeCommand)
 endif

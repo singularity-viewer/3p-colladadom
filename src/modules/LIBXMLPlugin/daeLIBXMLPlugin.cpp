@@ -1,15 +1,10 @@
 /*
- * Copyright 2006 Sony Computer Entertainment Inc.
- *
- * Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://research.scea.com/scea_shared_source_license.html
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing permissions and limitations under the 
- * License. 
- */
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 
 // The user can choose whether or not to include libxml support in the DOM. Supporting libxml will
 // require linking against it. By default libxml support is included.
@@ -150,14 +145,30 @@ daeString daeLIBXMLPlugin::getOption( daeString option )
 	return NULL;
 }
 
+namespace {
+	void libxmlErrorHandler(void* arg,
+	                        const char* msg,
+	                        xmlParserSeverities severity,
+	                        xmlTextReaderLocatorPtr locator) {
+		if(severity == XML_PARSER_SEVERITY_VALIDITY_WARNING  ||
+		   severity == XML_PARSER_SEVERITY_WARNING) {
+			daeErrorHandler::get()->handleWarning(msg);
+		}
+		else
+			daeErrorHandler::get()->handleError(msg);
+	}
+}
+
 // A simple structure to help alloc/free xmlTextReader objects
 struct xmlTextReaderHelper {
 	xmlTextReaderHelper(const daeURI& uri) {
-		reader = xmlReaderForFile(cdom::fixUriForLibxml(uri.str()).c_str(), NULL, 0);
+		if((reader = xmlReaderForFile(cdom::fixUriForLibxml(uri.str()).c_str(), NULL, 0)))
+		   xmlTextReaderSetErrorHandler(reader, libxmlErrorHandler, NULL);
 	}
 
 	xmlTextReaderHelper(daeString buffer, const daeURI& baseUri) {
-		reader = xmlReaderForDoc((xmlChar*)buffer, cdom::fixUriForLibxml(baseUri.str()).c_str(), NULL, 0);
+		if((reader = xmlReaderForDoc((xmlChar*)buffer, cdom::fixUriForLibxml(baseUri.str()).c_str(), NULL, 0)))
+			xmlTextReaderSetErrorHandler(reader, libxmlErrorHandler, NULL);
 	};
 
 	~xmlTextReaderHelper() {
@@ -198,10 +209,13 @@ daeElementRef daeLIBXMLPlugin::read(_xmlTextReader* reader) {
 		}
 	}
 
-	return readElement(reader, NULL);
+	int readRetVal = 0;
+	return readElement(reader, NULL, readRetVal);
 }
 
-daeElementRef daeLIBXMLPlugin::readElement(_xmlTextReader* reader, daeElement* parentElement) {
+daeElementRef daeLIBXMLPlugin::readElement(_xmlTextReader* reader,
+                                           daeElement* parentElement,
+                                           /* out */ int& readRetVal) {
 	assert(xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT);
 	daeString elementName = (daeString)xmlTextReaderConstName(reader);
 	bool empty = xmlTextReaderIsEmptyElement(reader) != 0;
@@ -220,13 +234,15 @@ daeElementRef daeLIBXMLPlugin::readElement(_xmlTextReader* reader, daeElement* p
 		return NULL;
 	}
 
-	if (xmlTextReaderRead(reader) != 1  ||  empty)
+	if ((readRetVal = xmlTextReaderRead(reader)) == -1)
+		return NULL;
+	if (empty)
 		return element;
 
 	int nodeType = xmlTextReaderNodeType(reader);
-	while (nodeType != -1  &&  nodeType != XML_READER_TYPE_END_ELEMENT) {
+	while (readRetVal == 1  &&  nodeType != XML_READER_TYPE_END_ELEMENT) {
 		if (nodeType == XML_READER_TYPE_ELEMENT) {
-			element->placeElement(readElement(reader, element));
+			element->placeElement(readElement(reader, element, readRetVal));
 		}
 		else if (nodeType == XML_READER_TYPE_TEXT) {
 			const xmlChar* xmlText = xmlTextReaderConstValue(reader);
@@ -236,19 +252,19 @@ daeElementRef daeLIBXMLPlugin::readElement(_xmlTextReader* reader, daeElement* p
 			if (dae.getCharEncoding() == DAE::Latin1)
 				delete[] xmlText;
 
-			if (xmlTextReaderRead(reader) != 1)
-				return NULL;
+			readRetVal = xmlTextReaderRead(reader);
 		}
-		else {
-			if (xmlTextReaderRead(reader) != 1)
-				return NULL;
-		}
+		else
+			readRetVal = xmlTextReaderRead(reader);
 
 		nodeType = xmlTextReaderNodeType(reader);
 	}
 
 	if (nodeType == XML_READER_TYPE_END_ELEMENT)
-		xmlTextReaderRead(reader);
+		readRetVal = xmlTextReaderRead(reader);
+
+	if (readRetVal == -1) // Something went wrong (bad xml probably)
+		return NULL;
 
 	return element;
 }
@@ -410,27 +426,22 @@ void daeLIBXMLPlugin::writeElement( daeElement* element )
 
 void daeLIBXMLPlugin::writeAttribute( daeMetaAttribute* attr, daeElement* element)
 {
-	//don't write if !required and is set && is default
-	if ( !attr->getIsRequired() ) {
-		//not required
-		if ( !element->isAttributeSet( attr->getName() ) ) {
-			//early out if !value && !required && !set
-			return;
-		}
-			
-		//is set
-		//check for default suppression
-		if (attr->compareToDefault(element) == 0) {
-			// We match the default value, so exit early
-			return;
-		}
-	}
-
-	xmlTextWriterStartAttribute(writer, (xmlChar*)(daeString)attr->getName());
 	ostringstream buffer;
 	attr->memoryToString(element, buffer);
 	string str = buffer.str();
 
+	// Don't write the attribute if
+	//  - The attribute isn't required AND
+	//     - The attribute has no default value and the current value is ""
+	//     - The attribute has a default value and the current value matches the default
+	if (!attr->getIsRequired()) {
+		if(!attr->getDefaultValue()  &&  str.empty())
+			return;
+		if(attr->getDefaultValue()  &&  attr->compareToDefault(element) == 0)
+			return;
+	}
+
+	xmlTextWriterStartAttribute(writer, (xmlChar*)(daeString)attr->getName());
 	xmlChar* utf8 = (xmlChar*)str.c_str();
 	if (dae.getCharEncoding() == DAE::Latin1)
 		utf8 = latin1ToUtf8(str);

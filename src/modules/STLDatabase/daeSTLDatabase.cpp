@@ -1,15 +1,10 @@
 /*
- * Copyright 2006 Sony Computer Entertainment Inc.
- *
- * Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://research.scea.com/scea_shared_source_license.html
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing permissions and limitations under the 
- * License. 
- */
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 
 #include <modules/daeSTLDatabase.h>
 #include <dae/daeMetaElement.h>
@@ -67,11 +62,11 @@ daeString daeSTLDatabase::getTypeName(daeUInt index)
 }
 
 // Documents
-daeInt daeSTLDatabase::insertDocument(const char *name, daeElement* dom, daeDocument** document)
+daeInt daeSTLDatabase::insertDocument(const char *name, daeElement* dom, daeDocument** document, bool zaeRootDocument, const std::string& extractedFileURI)
 {
-	return createDocument( name, dom, document );
+	return createDocument( name, dom, document, zaeRootDocument, extractedFileURI );
 }
-daeInt daeSTLDatabase::createDocument(const char *name, daeElement* dom, daeDocument** document)
+daeInt daeSTLDatabase::createDocument(const char *name, daeElement* dom, daeDocument** document, bool zaeRootDocument, const std::string& extractedFileURI)
 {
 	// If a document already exists with the same name, error
 	if(isDocumentLoaded(name))
@@ -82,7 +77,7 @@ daeInt daeSTLDatabase::createDocument(const char *name, daeElement* dom, daeDocu
 	}
 	
 	// Make a new document
-	daeDocument *newDocument = new daeDocument(dae);
+	daeDocument *newDocument = new daeDocument(dae, zaeRootDocument, extractedFileURI);
 	newDocument->getDocumentURI()->setURI(name);
 	newDocument->setDomRoot(dom);
 	// Push the connection into the database

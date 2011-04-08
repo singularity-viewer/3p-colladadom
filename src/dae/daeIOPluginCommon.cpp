@@ -1,15 +1,10 @@
 /*
- * Copyright 2007 Sony Computer Entertainment Inc.
- *
- * Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://research.scea.com/scea_shared_source_license.html
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing permissions and limitations under the 
- * License. 
- */
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 
 #include <sstream>
 #include <dae.h>
@@ -19,6 +14,9 @@
 #include <dae/daeMetaElement.h>
 #include <dae/daeErrorHandler.h>
 #include <dae/daeMetaElementAttribute.h>
+#ifndef NO_ZAE
+#include <dae/daeZAEUncompressHandler.h>
+#endif 
 
 using namespace std;
 
@@ -62,9 +60,11 @@ daeInt daeIOPluginCommon::read(const daeURI& uri, daeString docBuffer)
 		return DAE_ERR_COLLECTION_ALREADY_EXISTS;
 	}
 
-	daeElementRef domObject = docBuffer ?
-		readFromMemory(docBuffer, fileURI) :
-		readFromFile(fileURI); // Load from URI
+     daeElementRef domObject = docBuffer ?
+            readFromMemory(docBuffer, fileURI) :
+            readFromFile(fileURI); // Load from URI
+
+#ifdef NO_ZAE
 
 	if (!domObject) {
 		string msg = docBuffer ?
@@ -83,8 +83,58 @@ daeInt daeIOPluginCommon::read(const daeURI& uri, daeString docBuffer)
 	if (res!= DAE_OK)
 		return res;
 
+#else
+
+    bool zaeRoot = false;
+    string extractedURI = "";
+    if (!domObject) {
+        daeZAEUncompressHandler zaeHandler(fileURI);
+        if (zaeHandler.isZipFile())
+        {
+            string rootFilePath = zaeHandler.obtainRootFilePath();
+            daeURI rootFileURI(*fileURI.getDAE(), rootFilePath);
+            domObject = readFromFile(rootFileURI);
+            if (!domObject)
+            {
+                string msg = string("Failed to load ") + fileURI.str() + "\n";
+                daeErrorHandler::get()->handleError(msg.c_str());
+                return DAE_ERR_BACKEND_IO;
+            }
+            zaeRoot = true;
+            extractedURI = rootFileURI.str();
+        }
+        else
+        {
+            string msg = docBuffer ?
+                "Failed to load XML document from memory\n" :
+            string("Failed to load ") + fileURI.str() + "\n";
+            daeErrorHandler::get()->handleError(msg.c_str());
+            return DAE_ERR_BACKEND_IO;
+        }
+    }
+
+    // Insert the document into the database, the Database will keep a ref on the main dom, so it won't get deleted
+    // until we clear the database
+
+    daeDocument *document = NULL;
+
+    int res = database->insertDocument(fileURI.getURI(),domObject,&document, zaeRoot, extractedURI);
+    if (res!= DAE_OK)
+        return res;
+
+#endif
+
 	return DAE_OK;
 }
+
+
+
+
+
+
+
+
+
 
 daeElementRef daeIOPluginCommon::beginReadElement(daeElement* parentElement,
 																									daeString elementName,

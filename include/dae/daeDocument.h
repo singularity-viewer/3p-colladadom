@@ -1,15 +1,10 @@
 /*
- * Copyright 2006 Sony Computer Entertainment Inc.
- *
- * Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://research.scea.com/scea_shared_source_license.html
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing permissions and limitations under the 
- * License. 
- */
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 
 #ifndef __DAE_DOCUMENT__
 #define __DAE_DOCUMENT__
@@ -31,8 +26,10 @@ public:
 	/**
 	 * Constructor
 	 * @param dae The dae that owns this document. 
+     * @param zaeRootDocument Indicates if the new document is the root document of a ZAE archive.
+     * @param extractedFileURI URI to extracted dae file.
 	 */
-	daeDocument(DAE& dae);
+    daeDocument(DAE& dae, bool zaeRootDocument = false, const std::string& extractedFileURI = "");
 
 	/**
 	 * Destructor
@@ -113,6 +110,21 @@ public:
 	 */
 	void changeElementSID( daeElementRef element, daeString newSID );
 
+    /**
+     * Returns true if this document is the root of a ZAE archive.
+     * In that case getExtractedFileURI() can be used to parse
+     * this document and for URI resolving.
+     * @note This function is called internally and not meant to be called by the client application.
+     */
+    bool isZAERootDocument() {return mZAERootDocument;}
+
+    /**
+     * If this document is the root of a ZAE archive, this method can be used
+     * to get the extracted file. Return value is only valid if isZAERootDocument()
+     * returns true.
+     * @note This function is called internally and not meant to be called by the client application.
+     */
+    const daeURI& getExtractedFileURI() {return mExtractedFileURI;}
 
 private:
 	/**
@@ -132,6 +144,17 @@ private:
 	 * @remarks This member will eventually be taken private, use getDocumentURI() to access it.
 	 */
 	daeURI uri;
+
+    /**
+     * Indicates if this document is the root of a ZAE archive.
+     */
+    bool mZAERootDocument;
+
+    /**
+     * URI pointing to the extracted root DAE if mZAERootDocument is true.
+     * Otherwise it is not valid.
+     */
+    daeURI mExtractedFileURI;
 };
 
 typedef daeDocument daeCollection;

@@ -1,15 +1,10 @@
 /*
- * Copyright 2007 Sony Computer Entertainment Inc.
- *
- * Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://research.scea.com/scea_shared_source_license.html
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing permissions and limitations under the 
- * License. 
- */
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 
 // The user can choose whether or not to include TinyXML support in the DOM. Supporting TinyXML will
 // require linking against it. By default TinyXML support isn't included.
@@ -206,25 +201,22 @@ void daeTinyXMLPlugin::writeValue( daeElement* element )
 
 void daeTinyXMLPlugin::writeAttribute( daeMetaAttribute* attr, daeElement* element )
 {
-	//don't write if !required and is set && is default
-	if ( !attr->getIsRequired() ) {
-		//not required
-		if ( !element->isAttributeSet( attr->getName() ) ) {
-			//early out if !value && !required && !set
+	ostringstream buffer;
+	attr->memoryToString(element, buffer);
+	string str = buffer.str();
+
+	// Don't write the attribute if
+	//  - The attribute isn't required AND
+	//     - The attribute has no default value and the current value is ""
+	//     - The attribute has a default value and the current value matches the default
+	if (!attr->getIsRequired()) {
+		if(!attr->getDefaultValue()  &&  str.empty())
 			return;
-		}
-			
-		//is set
-		//check for default suppression
-		if (attr->compareToDefault(element) == 0) {
-			// We match the default value, so exit early
+		if(attr->getDefaultValue()  &&  attr->compareToDefault(element) == 0)
 			return;
-		}
 	}
 
-	std::ostringstream buffer;
-	attr->memoryToString(element, buffer);
-	m_elements.front()->SetAttribute(attr->getName(), buffer.str().c_str());
+	m_elements.front()->SetAttribute(attr->getName(), str.c_str());
 }
 
 #endif // DOM_INCLUDE_TINYXML

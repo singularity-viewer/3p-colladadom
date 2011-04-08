@@ -1,19 +1,31 @@
 #!/usr/bin/make
+#
 # Copyright 2006 Sony Computer Entertainment Inc.
 #
-# Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
-# file except in compliance with the License. You may obtain a copy of the License at:
-# http://research.scea.com/scea_shared_source_license.html
-#
-# Unless required by applicable law or agreed to in writing, software distributed under the License 
-# is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
-# implied. See the License for the specific language governing permissions and limitations under the 
-# License. 
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+# 
 
-# By default, all commands are silent. Echo statements are provided for each rule (if appropriate)
-# so the user knows what's going on. If you need to debug the makefile or need to know what's
-# going on, call make with verbose=yes.
-ifneq ($(verbose),yes)
+# Set oldMakeExport=yes to generate a makefile suitable for use with a pre-3.80
+# version of make.
+ifeq ($(oldMakeExport),yes)
+printCommands := yes
+printMessages := no
+endif
+
+# By default, build messages are printed. These messages let the user know
+# what's happening during the build.
+ifneq ($(printMessages),no)
+define printMessage
+$(if $(not $(findstring plainEcho,$(2))),@)echo $(1)
+endef
+else
+define printMessage
+endef
+endif
+
+# By default, the actual build commands aren't printed.
+ifneq ($(printCommands),yes)
 .SILENT:
 endif
 
@@ -23,15 +35,8 @@ endif
 os := linux
 ifneq ($(shell uname | grep -i darwin),)
 os := mac
-# make sure mac builds on gcc 4.0 and uses the 10.5 sdk but sets min version to 10.4
-CXX:=gcc-4.0
-CXXFLAGS:= -fno-stack-protector -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.5.sdk
-LDFLAGS:= -fno-stack-protector -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.5.sdk
 else ifneq ($(or $(shell uname | grep -i cygwin),$(shell uname | grep -i mingw)),)
 os := windows
-else 
-#linux system, ensure we're using gcc-4.1
-CXX:=g++-4.1
 endif
 
 # nativeArch: For internal use. Don't override this, instead override 'arch'.
@@ -47,9 +52,9 @@ arch := $(nativeArch)
 project := all
 
 # Release/debug configuration: 'release', 'debug', or 'all'
-conf := all
+conf := release
 
-# Collada version: No other versions supported for now
+# Collada version: '1.4', '1.5', or 'all'
 colladaVersion := 1.4
 
 # parser: 'libxml', 'tinyxml', or 'all'.
@@ -71,7 +76,7 @@ endif
 
 # Initialize the build variables
 define setBuildVar
-$(1)s := $(sort $(subst all,$(2),$($(1))))
+$(1)s := $(subst all,$(2),$($(1)))
 ifneq ($$(filter-out $(2),$$($(1)s)),)
 $$(error Invalid setting: $(1)=$($(1)))
 endif
@@ -87,14 +92,14 @@ ifneq ($(filter-out x86 ppc,$(archs)),)
 $(error Invalid setting arch=$(arch))
 endif
 
-$(eval $(call setBuildVar,project,dom domTest))
-$(eval $(call setBuildVar,colladaVersion,1.4))
+$(eval $(call setBuildVar,project,minizip dom domTest))
+$(eval $(call setBuildVar,colladaVersion,1.4 1.5))
 $(eval $(call setBuildVar,conf,debug release))
 $(eval $(call setBuildVar,parser,libxml tinyxml))
 
 comma := ,
 domMajorVersion := 2
-domMinorVersion := 1
+domMinorVersion := 2
 domVersion := $(domMajorVersion).$(domMinorVersion)
 domVersionNoDots := $(subst .,,$(domVersion))
 
@@ -145,7 +150,7 @@ $(allOutputPaths):
 #
 .PHONY: clean
 clean:
-	@echo Removing build files.
+	$(call printMessage,Removing build files.)
 # Delete all the output files
 	rm -rf $(allOutputFiles)
 # Delete each empty output folder
@@ -172,7 +177,7 @@ domTestExes := $(filter %domTest,$(allTargets))
 .PHONY: test
 test: $(domTestExes)
 	@for testExe in $(domTestExes); do \
-		echo $$testExe $(domTestOpts); \
+		$(call printMessage,$$testExe $(domTestOpts);,plainEcho) \
 		$$testExe $(domTestOpts); \
 	done
 
@@ -195,12 +200,12 @@ endif
 ifneq ($(installPrefix),)
 ifeq ($(oss),linux)
 uninstall:
-	@echo Uninstalling from $(installPrefix)
+	$(call printMessage,Uninstalling from $(installPrefix))
 	rm -rf $(installPrefix)/include/colladadom
 	rm -f  $(installPrefix)/lib/libcollada*dom*
 else ifeq ($(oss),mac)
 uninstall:
-	@echo Uninstalling from $(prefix)
+	$(call printMessage,Uninstalling from $(prefix))
 	 rm -rf $(installPrefix)/Collada*Dom*.framework
 endif
 else ifneq ($(findstring uninstall,$(MAKECMDGOALS)),)
@@ -221,19 +226,20 @@ endef
 .PHONY: install
 ifeq ($(oss),linux)
 install: uninstall
-	@echo Installing to $(prefix)
+	$(call printMessage,Installing to $(prefix))
 # Write the install prefix to the file make/installPrefix.mk so we can retrieve it for uninstalling.
 	echo 'installPrefix := $(prefix)' > make/installPrefix.mk
 # Install headers
 	cp -R include $(prefix)/include/colladadom
-	find $(prefix)/include/colladadom -name '.svn' | xargs rm -r
+# We write this as a loop to avoid an error when there are no files to remove
+	for svndir in $(find $(prefix)/include/colladadom -name '.svn'); do rm -rf $svndir; done
 # Install linux-1.4 libs
 	if [ -d build/linux-1.4 ]; then cp -P build/linux-1.4/libcollada*dom* $(prefix)/lib; fi;
 # Install linux-1.4-d libs
 	if [ -d build/linux-1.4-d ]; then cp -P build/linux-1.4-d/libcollada*dom* $(prefix)/lib; fi;
 else ifeq ($(oss),mac)
 install: uninstall
-	@echo Installing to $(prefix)
+	$(call printMessage,Installing to $(prefix))
 	echo 'installPrefix := $(prefix)' > make/installPrefix.mk
 	$(call installMacFrameworkCmd,build/mac-1.4,Collada14Dom.framework,$(domVersion))
 	$(call installMacFrameworkCmd,build/mac-1.4-d,Collada14Dom-d.framework,$(domVersion))
@@ -247,4 +253,4 @@ installTest:
 	$(MAKE) uninstall
 	$(MAKE) clean project=domTest
 	$(MAKE) project=domTest
-	@echo installTest done
+	$(call printMessage,installTest done)

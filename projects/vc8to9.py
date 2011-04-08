@@ -10,9 +10,9 @@ def slnToVC9(vc8Sln, vc9Sln):
         return False
     for line in vc8File:
         if line.find('Microsoft Visual Studio Solution File, Format Version 9.00') != -1:
-            vc9File.write('Microsoft Visual Studio Solution File, Format Version 10.00\r\n')
+            vc9File.write('Microsoft Visual Studio Solution File, Format Version 10.00\n')
         elif line.find('# Visual Studio 2005') != -1:
-            vc9File.write('# Visual Studio 2008\r\n')
+            vc9File.write('# Visual Studio 2008\n')
         else:
             vc9File.write(line)
     return True
@@ -46,8 +46,7 @@ def vcprojToVC9(vc8Proj, vc9Proj):
     root.writexml(open(vc9Proj, 'w'))
     return True
 
-def toVC9(vc8Path):
-    vc9Path = join(vc8Path, '..', 'vc9')
+def toVC9(vc8Path, vc9Path):
     if not path.exists(vc9Path):
         os.mkdir(vc9Path)
     for path_ in os.listdir(vc8Path):
@@ -85,8 +84,12 @@ def convertVC8Tags(dir):
 
 if len(sys.argv) < 2 or not path.exists(sys.argv[1]):
     print 'failed'
-if not toVC9(sys.argv[1]):
+vc8Path = sys.argv[1]
+vc9Path = join(vc8Path, '..', 'vc9')
+if len(sys.argv) > 2:
+    vc9Path = sys.argv[2]
+if not toVC9(vc8Path, vc9Path):
     print 'failed'
-if len(sys.argv) >= 3 and sys.argv[2] == 'convertVC8Tags':
-    if not convertVC8Tags(join(sys.argv[1], '..', 'vc9')):
+if len(sys.argv) > 3 and sys.argv[3] == 'convertVC8Tags':
+    if not convertVC8Tags(vc9Path):
         print 'failed'

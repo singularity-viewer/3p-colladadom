@@ -1,15 +1,10 @@
 /*
- * Copyright 2006 Sony Computer Entertainment Inc.
- *
- * Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://research.scea.com/scea_shared_source_license.html
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing permissions and limitations under the 
- * License. 
- */
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 
 #include <dae.h>
 #include <dae/daeDatabase.h>
@@ -48,6 +43,17 @@ DAE::cleanup()
 	//Contributed by Nus - Wed, 08 Nov 2006
 	daeStringRef::releaseStringTable();
 	//----------------------
+
+#ifndef NO_BOOST
+    try
+    {
+		boost::filesystem::remove_all(cdom::getSafeTmpDir());
+    }
+    catch (...)
+    {
+        daeErrorHandler::get()->handleWarning("Could not remove temporary directory in DAE::cleanup()\n");
+    }
+#endif
 }
 
 void DAE::init(daeDatabase* database_, daeIOPlugin* ioPlugin) {
@@ -247,7 +253,7 @@ daeInt DAE::saveAs(daeString uriToSaveTo, daeUInt documentIndex, daeBool replace
 		return DAE_ERROR;
 
 	daeString docUri = getDoc((int)documentIndex)->getDocumentURI()->getURI();
-	return writeCommon(docUri, uriToSaveTo, replace);
+	return writeCommon(docUri, uriToSaveTo, replace) ? DAE_OK : DAE_ERROR;
 }
 
 daeInt DAE::unload(daeString uri) {

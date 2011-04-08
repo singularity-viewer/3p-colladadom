@@ -1,15 +1,10 @@
 /*
- * Copyright 2006 Sony Computer Entertainment Inc.
- *
- * Licensed under the SCEA Shared Source License, Version 1.0 (the "License"); you may not use this 
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://research.scea.com/scea_shared_source_license.html
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
- * implied. See the License for the specific language governing permissions and limitations under the 
- * License. 
- */
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 
 #include <list>
 #include <vector>
@@ -156,6 +151,18 @@ namespace {
 	                         daeElement* (*finder)(daeElement*, const string&, const string&),
 	                         list<string>& remainingPart) {
 		remainingPart.clear();
+
+        // need to follow instance urls since they are just copies of code in the url.
+        if ( strncmp( container->getElementName(), "instance_", 9 ) == 0 ) {
+            daeURI *uri = (daeURI*)container->getAttributeValue("url");
+            if ( !!uri && !!uri->getElement() ) {
+                // found the url, now resolve the left over part
+                daeElement *e = findWithDots( uri->getElement(), s, profile, finder, remainingPart );
+                if ( !!e ) {
+                    return e;
+                }
+            }
+        }
 
 		// First see if the whole thing resolves correctly
 		if (daeElement* result = finder(container, s, profile))
@@ -360,6 +367,35 @@ namespace {
 		if ((!member.empty() || haveArrayIndex1)  &&  result.scalar == NULL)
 			return daeSidRef::resolveData();
 
+        if( !!result.elt && !result.array && !result.scalar ) {
+            // <newparam> can have a SIDREF specification, so if the current sid resolves to this newparam, then start a new search
+            // for the <newparam>'s SIDREF
+            if( strcmp(result.elt->getElementName(),"newparam") == 0) {
+                daeElement* psidref = result.elt->getChild("SIDREF");
+                if( !!psidref ) {
+                    daeSidRef::resolveData newresult;
+                    daeSidRef newsidref(psidref->getCharData(),result.elt->getParent(),sidRef.profile);
+                    newresult = result.elt->getDAE()->getSidRefCache().lookup(newsidref);
+                    if (!!newresult.elt) {
+                        return newresult;
+                    }
+                    // try resolving as an animation-style sid ref, where the first part is an ID.
+                    newresult = resolveImpl(newsidref);
+                    if( !newresult.elt ) {
+                        // this is actually not part of the standard, it is only a hack
+                        newresult = resolveImpl(daeSidRef(string("./") + psidref->getCharData(),result.elt->getParent(),sidRef.profile));
+                        if( !!newresult.elt ) {
+                            fprintf(stderr,"SID '%s' that needs  './' prefixed to it to resolve correctly\n",psidref->getCharData().c_str());
+                        }
+                    }
+                    if( !!newresult.elt ) {
+                        return newresult;
+                    }
+                }
+            }
+        
+        }
+
 		// SID resolution was successful.
 		return result;
 	}
@@ -477,11 +513,19 @@ daeDouble *daeSIDResolver::getDouble()
 }
 
 
-daeSidRefCache::daeSidRefCache() : hitCount(0), missCount(0) { }
+daeSidRefCache::daeSidRefCache() : hitCount(0), missCount(0) 
+{
+	lookupTable = new std::map<daeSidRef, daeSidRef::resolveData>();
+}
+
+daeSidRefCache::~daeSidRefCache()
+{
+	delete lookupTable;
+}
 
 daeSidRef::resolveData daeSidRefCache::lookup(const daeSidRef& sidRef) {
-	map<daeSidRef, daeSidRef::resolveData>::iterator iter = lookupTable.find(sidRef);
-	if (iter != lookupTable.end()) {
+	map<daeSidRef, daeSidRef::resolveData>::iterator iter = lookupTable->find(sidRef);
+	if (iter != lookupTable->end()) {
 		hitCount++;
 		return iter->second;
 	}
@@ -490,16 +534,16 @@ daeSidRef::resolveData daeSidRefCache::lookup(const daeSidRef& sidRef) {
 }
 
 void daeSidRefCache::add(const daeSidRef& sidRef, const daeSidRef::resolveData& result) {
-	lookupTable[sidRef] = result;
+	(*lookupTable)[sidRef] = result;
 }
 
 void daeSidRefCache::clear() {
-	lookupTable.clear();
+	lookupTable->clear();
 	hitCount = missCount = 0;
 }
 
 bool daeSidRefCache::empty() {
-	return lookupTable.empty();
+	return lookupTable->empty();
 }
 
 int daeSidRefCache::misses() {

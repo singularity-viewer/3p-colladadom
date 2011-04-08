@@ -1,3 +1,10 @@
+/*
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
 #include <cstdarg>
 #include <algorithm>
 #include <iterator>
@@ -9,6 +16,12 @@
 #else
 #include <unistd.h>  // for getcwd (linux)
 #endif
+
+#ifndef NO_BOOST
+#include <boost/filesystem/convenience.hpp>       // THIS WAS NOT COMMENTED.
+#endif
+
+#include <cstdio> // for tmpnam
 
 using namespace std;
 
@@ -35,6 +48,24 @@ string cdom::replace(const string& s, const string& replace, const string& repla
 
 	result += s.substr(pos1, s.length()-pos1);
 	return result;
+}
+
+void cdom::trimWhitespaces(string& str) {
+    string whitespaces ( " \t\f\v\n\r" );
+
+    size_t found = str.find_last_not_of( whitespaces );
+    if ( found != std::string::npos )
+    {
+        str.erase( found + 1 );
+        found = str.find_first_not_of( whitespaces );
+        if ( found != std::string::npos )
+            str.erase( 0, found );
+    }
+    else
+    {
+        // whitespaces only
+        str.clear();
+    }
 }
 
 void cdom::tokenize(const string& s,
@@ -110,6 +141,59 @@ string cdom::getCurrentDirAsUri() {
 		result += "/";
 	return result;
 }
+
+char cdom::getFileSeparator() {
+    if (getSystemType() == Windows) {
+        return '\\';
+    }
+    return '/';
+}
+#ifndef NO_BOOST
+const string& cdom::getSystemTmpDir() {
+#ifdef WIN32
+    static string tmpDir = string(getenv("TMP")) + getFileSeparator();
+#elif defined(__linux__) || defined(__linux)
+    static string tmpDir = "/tmp/";
+#elif defined __APPLE_CC__
+static string tmpDir = string(getenv("TMPDIR"));
+#elif defined __CELLOS_LV2__
+#error tmp dir for your system unknown
+#else
+#error tmp dir for your system unknown
+#endif
+    return tmpDir;
+}
+
+string cdom::getRandomFileName() {
+    std::string randomSegment;
+    // have to createa a buffer in order to make it multi-thread safe
+    std::string tmpbuffer; tmpbuffer.resize(L_tmpnam*2+1);
+    std::string tmp(tmpnam(&tmpbuffer[0]));
+#ifdef WIN32
+    randomSegment = tmp.substr(tmp.find_last_of('\\')+1);
+#elif defined(__linux__) || defined(__linux)
+    randomSegment = tmp.substr(tmp.find_last_of('/')+1);
+#elif defined __APPLE_CC__
+	randomSegment = tmp.substr(tmp.find_last_of('/')+1);
+#elif defined __CELLOS_LV2__
+#error  usage of tmpnam() for your system unknown
+#else
+#error  usage of tmpnam() for your system unknown
+#endif
+    return randomSegment;
+}
+
+const string& cdom::getSafeTmpDir() {
+    // there is a race condition here is multiple collada-dom -enabled processes call getSafeTmpDir at the same time.
+    // Therefore, have to check if directory already exists before using it. This still leaves the race
+    // condition, but makes it more difficult to reproduce. A better alternative would be to stop relying on tmpnam!
+    static string tmpDir;
+    do {
+        tmpDir = getSystemTmpDir() + getRandomFileName() + getFileSeparator();
+    } while(boost::filesystem::is_directory(tmpDir));
+    return tmpDir;
+}
+#endif //NO_BOOST
 
 int cdom::strcasecmp(const char* str1, const char* str2) {
 #ifdef _MSC_VER
