@@ -62,7 +62,7 @@ else ifeq ($(os),mac)
 #copyFrameworkResourcesCommand = cp -R make/macFrameworkResources/* $(frameworkResourcesPath) && \
 #  sed $(sedReplaceExpression) make/macFrameworkResources/Info.plist > $(frameworkResourcesPath)/Info.plist && \
 #  sed $(sedReplaceExpression) make/macFrameworkResources/English.lproj/InfoPlist.strings > $(frameworkResourcesPath)/English.lproj/InfoPlist.strings
-targets += $(addprefix $(outPath),$(libName).a)
+targets += $(addprefix $(outPath),$(libName)$(debugSuffix).a)
 
 else ifeq ($(os),ps3)
 # On PS3 we build a static lib, since PS3 doesn't support shared libs
