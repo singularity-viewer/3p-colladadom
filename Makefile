@@ -59,7 +59,7 @@ arch := $(nativeArch)
 project := minizip dom
 
 # Release/debug configuration: 'release', 'debug', or 'all'
-conf := release
+conf := all
 
 # Collada version: '1.4', '1.5', or 'all'
 colladaVersion := 1.4
