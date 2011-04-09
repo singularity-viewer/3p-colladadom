@@ -101,7 +101,7 @@ case "$AUTOBUILD_PLATFORM" in
 
 esac
 mkdir -p "stage/include/collada"
-cp -R "include" "stage/include/collada"
+cp -R include/* "stage/include/collada"
 mkdir -p stage/LICENSES
 cp "license.txt" "stage/LICENSES/collada.txt"
 mkdir -p stage/LICENSES/collada-other
