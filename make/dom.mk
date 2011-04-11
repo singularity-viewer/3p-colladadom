@@ -48,13 +48,13 @@ endif
 
 # For mingw: add boost
 ifeq ($(findstring $(os),linux mac),)
-includeOpts += -Istage/packages/include/boost
-libOpts += stage/packages/lib/$(buildID)/libboost_system.a
-libOpts += stage/packages/lib/$(buildID)/libboost_filesystem.a
+includeOpts += -Istage/packages/include
+libOpts += stage/packages/lib/$(conf)/libboost_system.a
+libOpts += stage/packages/lib/$(conf)/libboost_filesystem.a
 else ifeq ($(os),mac)
-includeOpts += -Istage/packages/include/boost
-libOpts += stage/packages/lib/$(buildID)/libboost_system.a
-libOpts += stage/packages/lib/$(buildID)/libboost_filesystem.a
+includeOpts += -Istage/packages/include
+libOpts += stage/packages/lib/$(conf)/libboost_system.a
+libOpts += stage/packages/lib/$(conf)/libboost_filesystem.a
 endif
 
 # minizip
