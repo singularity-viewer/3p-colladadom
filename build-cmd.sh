@@ -61,21 +61,21 @@ case "$AUTOBUILD_PLATFORM" in
 				"$libdir/lib/release/libcollada14dom.so"
 			cp "build/linux-1.4/libcollada14dom.so.2" \
 				"$libdir/lib/release/libcollada14dom.so.2"
-			cp "build/linux-1.4/libcollada14dom.so.2.1" \
-				"$libdir/lib/release/libcollada14dom.so.2.1"
+			cp "build/linux-1.4/libcollada14dom.so.2.2" \
+				"$libdir/lib/release/libcollada14dom.so.2.2"
 
 
 			cp "build/linux-1.4-d/libcollada14dom-d.so" \
 				"$libdir/lib/debug/libcollada14dom-d.so"
 			cp "build/linux-1.4-d/libcollada14dom-d.so.2" \
 				"$libdir/lib/debug/libcollada14dom-d.so.2"
-			cp "build/linux-1.4-d/libcollada14dom-d.so.2.1" \
-				"$libdir/lib/debug/libcollada14dom-d.so.2.1"
+			cp "build/linux-1.4-d/libcollada14dom-d.so.2.2" \
+				"$libdir/lib/debug/libcollada14dom-d.so.2.2"
         ;;
 
 esac
 mkdir -p "stage/include/collada"
-cp -R "include" "stage/include/collada"
+cp -R include/* "stage/include/collada"
 mkdir -p stage/LICENSES
 cp "license.txt" "stage/LICENSES/collada.txt"
 mkdir -p stage/LICENSES/collada-other
