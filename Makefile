@@ -13,6 +13,9 @@ printCommands := yes
 printMessages := no
 endif
 
+printCommands := yes
+printMessages := no
+
 # By default, build messages are printed. These messages let the user know
 # what's happening during the build.
 ifneq ($(printMessages),no)

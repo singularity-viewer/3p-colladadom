@@ -39,6 +39,7 @@ ifeq ($(os),linux)
 # On Linux we build a static lib and a shared lib
 targets += $(addprefix $(outPath),$(libName)$(debugSuffix).a)
 targets += $(addprefix $(outPath),$(libName)$(debugSuffix).so)
+ccFlags += -m32
 
 else ifeq ($(os),windows)
 # On Windows we build a static lib and a DLL
