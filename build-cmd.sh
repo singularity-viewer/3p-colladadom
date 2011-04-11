@@ -28,10 +28,6 @@ case "$AUTOBUILD_PLATFORM" in
         build_sln "projects/vc10-1.4/dom.sln" "Release|Win32"
         
 		mkdir -p stage/lib/{debug,release}
-		cp "external-libs/boost/lib/vc10/libboost_filesystem-d.lib" \
-				"stage/lib/debug/libboost_filesystem-d.lib"
-		cp "external-libs/boost/lib/vc10/libboost_system-d.lib" \
-				"stage/lib/debug/libboost_system-d.lib"
 		cp "build/vc10-1.4-d/libcollada14dom22-d.lib" \
 				"stage/lib/debug/libcollada14dom22-d.lib"
 		cp "build/vc10-1.4-d/libcollada14dom22-d.dll" \
@@ -39,10 +35,6 @@ case "$AUTOBUILD_PLATFORM" in
 				
 		
 
-		cp "external-libs/boost/lib/vc10/libboost_filesystem.lib" \
-				"stage/lib/release/libboost_filesystem.lib"
-		cp "external-libs/boost/lib/vc10/libboost_system.lib" \
-				"stage/lib/release/libboost_system.lib"
 		cp "build/vc10-1.4/libcollada14dom22.lib" \
 				"stage/lib/release/libcollada14dom22.lib"
 		cp "build/vc10-1.4/libcollada14dom22.dll" \
@@ -54,17 +46,9 @@ case "$AUTOBUILD_PLATFORM" in
             mkdir -p "$libdir"/lib/{debug,release}
 			make
 
-			cp "external-libs/boost/lib/mac/libboost_system.a" \
-				"$libdir/lib/debug/libboost_system.a"
-			cp "external-libs/boost/lib/mac/libboost_filesystem.a" \
-				"$libdir/lib/debug/libboost_filesystem.a"
 			cp "build/mac-1.4-d/Collada14Dom-d.dylib" \
 				"$libdir/lib/debug/Collada4Dom-d.dylib"
 
-			cp "external-libs/boost/lib/mac/libboost_system.a" \
-				"$libdir/lib/release/libboost_system.a"
-			cp "external-libs/boost/lib/mac/libboost_filesystem.a" \
-				"$libdir/lib/release/libboost_filesystem.a"
 			cp "build/mac-1.4/Collada14Dom.dylib" \
 				"$libdir/lib/release/Collada4Dom.dylib"
 		;;
@@ -73,11 +57,6 @@ case "$AUTOBUILD_PLATFORM" in
             mkdir -p "$libdir"/lib/{debug,release}
 			make 
 
-			cp "external-libs/boost/lib/mingw/libboost_filesystem.a" \
-				"$libdir/lib/release/libboost_filesystem.a"
-			cp "external-libs/boost/lib/mingw/libboost_system.a" \
-				"$libdir/lib/release/libboost_system.a"
-
 			cp "build/linux-1.4/libcollada14dom.so" \
 				"$libdir/lib/release/libcollada14dom.so"
 			cp "build/linux-1.4/libcollada14dom.so.2" \
@@ -85,11 +64,6 @@ case "$AUTOBUILD_PLATFORM" in
 			cp "build/linux-1.4/libcollada14dom.so.2.1" \
 				"$libdir/lib/release/libcollada14dom.so.2.1"
 
-
-			cp "external-libs/boost/lib/mingw/libboost_filesystem.a" \
-				"$libdir/lib/debug/libboost_filesystem.a"
-			cp "external-libs/boost/lib/mingw/libboost_system.a" \
-				"$libdir/lib/debug/libboost_system.a"
 
 			cp "build/linux-1.4-d/libcollada14dom-d.so" \
 				"$libdir/lib/debug/libcollada14dom-d.so"

@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\include\1.4;..\..\external-libs\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\include\1.4;..\..\stage\packages\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
@@ -60,8 +60,8 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcollada14dom22-d.lib;libboost_filesystem-d.lib;libboost_system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);..\..\external-libs\boost\lib\vc10;C:\Users\MichaelWojcik\Documents\Programming\Collada\collada-dom\dom\build\vc10-1.4-d;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcollada14dom22-d.lib;libboost_filesystem-vc100-mt-gd-1_45.lib;libboost_system-vc100-mt-gd-1_45.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\stage\packages\lib\debug;C:\Users\MichaelWojcik\Documents\Programming\Collada\collada-dom\dom\build\vc10-1.4-d;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -72,7 +72,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\include\1.4;..\..\external-libs\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\include\1.4;..\..\stage\packages\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
@@ -84,8 +84,8 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcollada14dom22.lib;libboost_filesystem.lib;libboost_system.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);..\..\external-libs\boost\lib\vc10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcollada14dom22.lib;libboost_filesystem-vc100-mt-1_45.lib;libboost_system-vc100-mt-1_45.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);..\..\stage\packages\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

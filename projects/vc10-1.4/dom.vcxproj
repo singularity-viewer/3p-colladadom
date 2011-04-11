@@ -48,7 +48,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\include\1.4;..\..\external-libs\libxml2\include;..\..\external-libs\tinyxml;..\..\external-libs\pcre;..\..\external-libs\minizip\include;..\..\external-libs\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\include\1.4;..\..\external-libs\libxml2\include;..\..\external-libs\tinyxml;..\..\external-libs\pcre;..\..\external-libs\minizip\include;..\..\stage\packages\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
@@ -62,8 +62,8 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libxml2_a.lib;zlib.lib;wsock32.lib;pcred.lib;pcrecppd.lib;minizip.lib;libboost_filesystem-d.lib;libboost_system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\external-libs\libxml2\win32\lib;..\..\external-libs\tinyxml\lib\vc10;..\..\external-libs\pcre\lib\vc10;..\..\external-libs\minizip\win32\lib;..\..\external-libs\boost\lib\vc10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libxml2_a.lib;zlib.lib;wsock32.lib;pcred.lib;pcrecppd.lib;minizip.lib;libboost_filesystem-vc100-mt-gd-1_45.lib;libboost_system-vc100-mt-gd-1_45.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\external-libs\libxml2\win32\lib;..\..\external-libs\tinyxml\lib\vc10;..\..\external-libs\pcre\lib\vc10;..\..\external-libs\minizip\win32\lib;..\..\stage\packages\lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -79,7 +79,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\include\1.4;..\..\external-libs\libxml2\include;..\..\external-libs\tinyxml;..\..\external-libs\pcre;..\..\external-libs\minizip\include;..\..\external-libs\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\include\1.4;..\..\external-libs\libxml2\include;..\..\external-libs\tinyxml;..\..\external-libs\pcre;..\..\external-libs\minizip\include;..\..\stage\packages\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
@@ -91,8 +91,8 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libxml2_a.lib;zlib.lib;wsock32.lib;pcre.lib;pcrecpp.lib;minizip.lib;libboost_filesystem.lib;libboost_system.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\external-libs\libxml2\win32\lib;..\..\external-libs\tinyxml\lib\vc10;..\..\external-libs\pcre\lib\vc10;..\..\external-libs\minizip\win32\lib;..\..\external-libs\boost\lib\vc10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libxml2_a.lib;zlib.lib;wsock32.lib;pcre.lib;pcrecpp.lib;minizip.lib;libboost_filesystem-vc100-mt-1_45.lib;libboost_system-vc100-mt-1_45.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\external-libs\libxml2\win32\lib;..\..\external-libs\tinyxml\lib\vc10;..\..\external-libs\pcre\lib\vc10;..\..\external-libs\minizip\win32\lib;..\..\stage\packages\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
