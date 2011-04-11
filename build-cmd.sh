@@ -53,8 +53,9 @@ case "$AUTOBUILD_PLATFORM" in
 				"$libdir/lib/release/Collada4Dom.dylib"
 		;;
         "linux")
-	    export LFLAGS=-m32
+	    export LDFLAGS=-m32
 	    export CFLAGS=-m32
+	    export CXXFLAGS=-m32
 			libdir="$top/stage"
             mkdir -p "$libdir"/lib/{debug,release}
 			make 
