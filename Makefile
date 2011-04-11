@@ -53,7 +53,7 @@ nativeArch := ppc
 endif
 
 # arch: x86 (or i386), x64 (or x86_64), ppc, ppc64
-arch := $(nativeArch)
+arch := i386
 
 # project: 'dom', 'domTest', or 'all'
 project := minizip dom
