@@ -47,10 +47,10 @@ case "$AUTOBUILD_PLATFORM" in
 			make
 
 			cp "build/mac-1.4-d/Collada14Dom-d.dylib" \
-				"$libdir/lib/debug/Collada4Dom-d.dylib"
+				"$libdir/lib/debug/Collada14Dom-d.dylib"
 
 			cp "build/mac-1.4/Collada14Dom.dylib" \
-				"$libdir/lib/release/Collada4Dom.dylib"
+				"$libdir/lib/release/Collada14Dom.dylib"
 		;;
         "linux")
 	    export LDFLAGS=-m32
