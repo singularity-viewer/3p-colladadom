@@ -35,15 +35,12 @@ includeOpts += -Iexternal-libs/tinyxml/
 libOpts += external-libs/tinyxml/lib/$(buildID)/libtinyxml.a
 endif
 
-ifeq ($(os),linux)
-libOpts += -lpcre -lpcrecpp
-else 
 # On Mac, Windows and PS3 we need to be told where to find pcre
 ifeq ($(os),windows)
 ccFlags += -DPCRE_STATIC
-endif
-includeOpts += -Iexternal-libs/pcre
-libOpts += $(addprefix external-libs/pcre/lib/$(buildID)/,libpcrecpp.a libpcre.a )
+else
+includeOpts += -Istage/packages/include/pcre
+libOpts += $(addprefix stage/packages/lib/release/,libpcrecpp.a libpcre.a )
 endif
 
 # For mingw: add boost

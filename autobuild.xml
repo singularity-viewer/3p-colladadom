@@ -51,6 +51,42 @@
           </map>
         </map>
       </map>
+      <key>pcre</key>
+      <map>
+        <key>license</key>
+        <string>bsd</string>
+        <key>license_file</key>
+        <string>LICENSES/pcre-license.txt</string>
+        <key>name</key>
+        <string>pcre</string>
+        <key>platforms</key>
+        <map>
+          <key>darwin</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>cb04654cdfe93e3c8d16fef0c475e2bb</string>
+              <key>url</key>
+              <string>http://s3-proxy.lindenlab.com/private-builds-secondlife-com/hg/repo/3p-pcre/rev/226370/arch/Darwin/installer/pcre-7.6-darwin-20110411.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>darwin</string>
+          </map>
+          <key>linux</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>70df2324f24f7da4bc8a60dd71ebe396</string>
+              <key>url</key>
+              <string>http://s3-proxy.lindenlab.com/private-builds-secondlife-com/hg/repo/3p-pcre/rev/226370/arch/Linux/installer/pcre-7.6-linux-20110412.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux</string>
+          </map>
+        </map>
+      </map>
     </map>
     <key>package_description</key>
     <map>
