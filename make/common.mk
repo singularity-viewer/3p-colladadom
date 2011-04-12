@@ -3,7 +3,7 @@ cc := ppu-lv2-g++
 ar := ppu-lv2-ar rcs
 exeSuffix := .elf
 else
-cc := g++
+cc := $(CXX)
 ar := ar rcs
 exeSuffix :=
 endif

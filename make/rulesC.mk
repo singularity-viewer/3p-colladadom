@@ -50,7 +50,7 @@ ifneq ($(obj),)
 # Make has weird evaluation semantics, so we have to be careful to capture the state of
 # any values we use in rule commands. This is the reason for all the target-specific variables.
 #$(obj): cc := $(cc)
-$(obj): cc := gcc
+$(obj): cc := $(CC)
 $(obj): ccFlags := $(ccFlags)
 $(obj): ccFlagsNoArch := $(filter-out -arch ppc ppc64 i386 x86_64,$(ccFlags))
 $(obj): includeOpts := $(includeOpts)

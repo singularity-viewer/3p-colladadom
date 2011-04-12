@@ -60,7 +60,7 @@ case "$AUTOBUILD_PLATFORM" in
 	    export CC=gcc-4.1
 			libdir="$top/stage"
             mkdir -p "$libdir"/lib/{debug,release}
-			make cc=$CXX
+			make 
 
 			cp "build/linux-1.4/libcollada14dom.so" \
 				"$libdir/lib/release/libcollada14dom.so"
