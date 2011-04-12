@@ -56,9 +56,11 @@ case "$AUTOBUILD_PLATFORM" in
 	    export LDFLAGS=-m32
 	    export CFLAGS=-m32
 	    export CXXFLAGS=-m32
+	    export CXX=g++-4.1
+	    export CC=gcc-4.1
 			libdir="$top/stage"
             mkdir -p "$libdir"/lib/{debug,release}
-			make 
+			make cc=$CXX
 
 			cp "build/linux-1.4/libcollada14dom.so" \
 				"$libdir/lib/release/libcollada14dom.so"
