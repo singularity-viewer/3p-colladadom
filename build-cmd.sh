@@ -44,8 +44,8 @@ case "$AUTOBUILD_PLATFORM" in
             mkdir -p "$libdir"/lib/{debug,release}
 			make
 
-			install_name_tool -id "@executable_path/../Resources/llcollada14dom-d.dylib" "build/mac-1.4-d/libcollada14dom-d.dylib" 
-			install_name_tool -id "@executable_path/../Resources/llcollada14dom.dylib" "build/mac-1.4/libcollada14dom.dylib" 
+			install_name_tool -id "@executable_path/../Resources/libcollada14dom-d.dylib" "build/mac-1.4-d/libcollada14dom-d.dylib" 
+			install_name_tool -id "@executable_path/../Resources/libcollada14dom.dylib" "build/mac-1.4/libcollada14dom.dylib" 
 
 			cp "build/mac-1.4-d/libcollada14dom-d.dylib" \
 				"$libdir/lib/debug/libcollada14dom-d.dylib"
