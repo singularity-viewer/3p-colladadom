@@ -142,8 +142,8 @@ def packageDomFilesPS3(zip, codePath):
 def packageDomFilesMac(zip, codePath):
     buildPath = join(codePath, 'dom', 'build', 'mac-' + colladaVersion)
     # Need to change the Mac framework link name in domTest
-    frameworkName = 'Collada' + colladaVersionNoDots + 'Dom.framework'
-    dylibName = 'Collada' + colladaVersionNoDots + 'Dom'
+    frameworkName = 'libcollada' + colladaVersionNoDots + 'dom.framework'
+    dylibName = 'libcollada' + colladaVersionNoDots + 'dom'
 
     domTest = join(buildPath, 'domTest')
     domDylib = join(buildPath, frameworkName, dylibName)

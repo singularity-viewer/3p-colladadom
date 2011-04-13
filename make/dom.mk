@@ -80,7 +80,7 @@ targets += $(addprefix $(outPath),$(windowsLibName)$(libVersionNoDots)$(debugSuf
 else 
 ifeq ($(os),mac)
 # On Mac we build a framework
-targets += $(addprefix $(outPath),Collada$(colladaVersionNoDots)Dom$(debugSuffix).framework)
+targets += $(addprefix $(outPath),libcollada$(colladaVersionNoDots)dom$(debugSuffix).framework)
 frameworkHeadersPath = $(framework)/Versions/$(libVersion)/Headers
 copyFrameworkHeadersCommand = cp -R include/* $(frameworkHeadersPath) && \
   mv $(frameworkHeadersPath)/$(colladaVersion)/dom $(frameworkHeadersPath)/dom && \

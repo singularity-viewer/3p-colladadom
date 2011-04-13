@@ -7,7 +7,7 @@
 	<key>CFBundleDocumentTypes</key>
 	<array/>
 	<key>CFBundleExecutable</key>
-	<string>Collada(colladaVersionNoDots)Dom(debugSuffix)</string>
+	<string>libcollada(colladaVersionNoDots)dom(debugSuffix)</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.collada.dom</string>
 	<key>CFBundleInfoDictionaryVersion</key>

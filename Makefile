@@ -216,7 +216,7 @@ uninstall:
 else ifeq ($(oss),mac)
 uninstall:
 	$(call printMessage,Uninstalling from $(prefix))
-	 rm -rf $(installPrefix)/Collada*Dom*.framework
+	 rm -rf $(installPrefix)/libcollada*dom*.framework
 endif
 else ifneq ($(findstring uninstall,$(MAKECMDGOALS)),)
 $(error Can't uninstall because we don't know what path we installed to (missing make/installPrefix.mk file))
@@ -225,7 +225,7 @@ uninstall:
 endif
 
 # 1st param is build path, 2nd param is framework name, 3rd param is framework version number
-# e.g. $(call installMacFrameworkCmd,build/mac-1.4,Collada14Dom.framework,2.0)
+# e.g. $(call installMacFrameworkCmd,build/mac-1.4,libcollada14dom.framework,2.0)
 define installMacFrameworkCmd
 if [ -d $(1) ]; then \
 cp -R $(1)/$(2) $(prefix)/$(2); \
@@ -251,8 +251,8 @@ else ifeq ($(oss),mac)
 install: uninstall
 	$(call printMessage,Installing to $(prefix))
 	echo 'installPrefix := $(prefix)' > make/installPrefix.mk
-	$(call installMacFrameworkCmd,build/mac-1.4,Collada14Dom.framework,$(domVersion))
-	$(call installMacFrameworkCmd,build/mac-1.4-d,Collada14Dom-d.framework,$(domVersion))
+	$(call installMacFrameworkCmd,build/mac-1.4,libcollada14dom.framework,$(domVersion))
+	$(call installMacFrameworkCmd,build/mac-1.4-d,libcollada14dom-d.framework,$(domVersion))
 endif
 
 .PHONY: installTest

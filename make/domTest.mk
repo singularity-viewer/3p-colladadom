@@ -21,7 +21,7 @@ libOpts += $(domName)
 endif
 else ifeq ($(os),mac)
 domPath := $(if $(installTest),$(installPrefix)/,$(outPath))
-domFramework := Collada$(colladaVersionNoDots)Dom$(debugSuffix).framework
+domFramework := libcollada$(colladaVersionNoDots)dom$(debugSuffix).framework
 domName := $(domPath)$(domFramework)
 # On Mac we use the framework for linking. If we're doing an install test then
 # use the installed framework, which we'll assume is a system framework path.
