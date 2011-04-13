@@ -46,10 +46,10 @@ case "$AUTOBUILD_PLATFORM" in
             mkdir -p "$libdir"/lib/{debug,release}
 			make
 
-			cp "build/mac-1.4-d/Collada14Dom-d.dylib" \
+			cp "build/mac-1.4-d/libcollada14dom-d.dylib" \
 				"$libdir/lib/debug/libcollada14dom-d.dylib"
 
-			cp "build/mac-1.4/Collada14Dom.dylib" \
+			cp "build/mac-1.4/libcollada14dom.dylib" \
 				"$libdir/lib/release/libcollada14dom.dylib"
 		;;
         "linux")
