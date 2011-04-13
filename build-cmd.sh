@@ -33,8 +33,6 @@ case "$AUTOBUILD_PLATFORM" in
 		cp "build/vc10-1.4-d/libcollada14dom22-d.dll" \
 				"stage/lib/debug/libcollada14dom22-d.dll"
 				
-		
-
 		cp "build/vc10-1.4/libcollada14dom22.lib" \
 				"stage/lib/release/libcollada14dom22.lib"
 		cp "build/vc10-1.4/libcollada14dom22.dll" \
@@ -45,6 +43,9 @@ case "$AUTOBUILD_PLATFORM" in
 			libdir="$top/stage"
             mkdir -p "$libdir"/lib/{debug,release}
 			make
+
+			install_name_tool -id "@executable_path/../Resources/llcollada14dom-d.dylib" "build/mac-1.4-d/libcollada14dom-d.dylib" 
+			install_name_tool -id "@executable_path/../Resources/llcollada14dom.dylib" "build/mac-1.4/libcollada14dom.dylib" 
 
 			cp "build/mac-1.4-d/libcollada14dom-d.dylib" \
 				"$libdir/lib/debug/libcollada14dom-d.dylib"
