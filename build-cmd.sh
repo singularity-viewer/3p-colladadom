@@ -49,9 +49,13 @@ case "$AUTOBUILD_PLATFORM" in
 
 			cp "build/mac-1.4-d/libcollada14dom-d.dylib" \
 				"$libdir/lib/debug/libcollada14dom-d.dylib"
+			cp "build/mac-1.4-d/libminizip-d.a" \
+				"$libdir/lib/debug/libminizip-d.a"
 
 			cp "build/mac-1.4/libcollada14dom.dylib" \
 				"$libdir/lib/release/libcollada14dom.dylib"
+			cp "build/mac-1.4/libminizip.a" \
+				"$libdir/lib/release/libminizip.a"
 		;;
         "linux")
 	    export LDFLAGS=-m32
