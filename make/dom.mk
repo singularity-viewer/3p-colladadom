@@ -24,8 +24,13 @@ ifeq ($(os),windows)
 includeOpts += -Iexternal-libs/libxml2/include
 libOpts += -Lexternal-libs/libxml2/$(buildID)/lib -lxml2 -lws2_32 -lz
 else
+ifeq ($(os),linux)
+includeOpts += -Iexternal-libs/libxml2/include
+libOpts += -Lexternal-libs/libxml2/$(buildID)/lib -lxml2
+else
 includeOpts += -I/usr/include/libxml2
 libOpts += -lxml2
+endif
 endif
 endif
 
