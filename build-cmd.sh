@@ -73,8 +73,12 @@ case "$AUTOBUILD_PLATFORM" in
 				"$libdir/lib/release/libcollada14dom.so.2"
 			cp "build/linux-1.4/libcollada14dom.so.2.2" \
 				"$libdir/lib/release/libcollada14dom.so.2.2"
+			cp "build/linux-1.4/libcollada14dom.a" \
+				"$libdir/lib/release/libcollada14dom.a"
 			cp "build/linux-1.4/libminizip.so" \
 				"$libdir/lib/release/libminizip.so"
+			cp "build/linux-1.4/libminizip.a" \
+				"$libdir/lib/release/libminizip.a"
 
 
 			cp "build/linux-1.4-d/libcollada14dom-d.so" \
@@ -83,8 +87,12 @@ case "$AUTOBUILD_PLATFORM" in
 				"$libdir/lib/debug/libcollada14dom-d.so.2"
 			cp "build/linux-1.4-d/libcollada14dom-d.so.2.2" \
 				"$libdir/lib/debug/libcollada14dom-d.so.2.2"
+			cp "build/linux-1.4-d/libcollada14dom-d.a" \
+				"$libdir/lib/debug/libcollada14dom-d.a"
 			cp "build/linux-1.4-d/libminizip-d.so" \
 				"$libdir/lib/debug/libminizip-d.so"
+			cp "build/linux-1.4-d/libminizip-d.a" \
+				"$libdir/lib/debug/libminizip-d.a"
         ;;
 
 esac
@@ -93,10 +101,8 @@ cp -R include/* "stage/include/collada"
 mkdir -p stage/LICENSES
 cp "license.txt" "stage/LICENSES/collada.txt"
 mkdir -p stage/LICENSES/collada-other
-cp "license/boost-license.txt" "stage/LICENSES/collada-other"
-cp "license/pcre-license.txt" "stage/LICENSES/collada-other"
-cp "license/minizip-license.txt" "stage/LICENSES/collada-other"
-cp "license/tinyxml-license.txt" "stage/LICENSES/collada-other"
+cp "license/minizip-license.txt" "stage/LICENSES/minizip.txt"
+cp "license/tinyxml-license.txt" "stage/LICENSES/tinyxml.txt"
 
 pass
 
