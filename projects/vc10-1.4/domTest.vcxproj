@@ -52,7 +52,7 @@
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <MinimalRebuild>false</MinimalRebuild>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;DOM_DYNAMIC;BOOST_ALL_NO_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;DOM_DYNAMIC;BOOST_ALL_NO_LIB;BOOST_FILESYSTEM_DEPRECATED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -60,7 +60,7 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcollada14dom22-d.lib;libboost_filesystem-vc100-mt-gd-1_45.lib;libboost_system-vc100-mt-gd-1_45.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcollada14dom22-d.lib;libboost_filesystem-mt-gd.lib;libboost_system-mt-gd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);..\..\stage\packages\lib\debug;C:\Users\MichaelWojcik\Documents\Programming\Collada\collada-dom\dom\build\vc10-1.4-d;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
@@ -84,7 +84,7 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcollada14dom22.lib;libboost_filesystem-vc100-mt-1_45.lib;libboost_system-vc100-mt-1_45.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcollada14dom22.lib;libboost_filesystem-mt.lib;libboost_system-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);..\..\stage\packages\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
