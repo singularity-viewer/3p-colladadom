@@ -18,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>0c4678ac85395f5f5294b63da1d79007</string>
+              <string>e859007376f28d699bfea420e44d02e3</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-boost/rev/249117/arch/Darwin/installer/boost-1.48.0-darwin-20120208.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/boost-1.45.0-darwin-20110304.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -30,21 +30,33 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>848766eac189e0fa785f4a025532acd9</string>
+              <string>6e71c78873593aea2ec5c68dcfde0167</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-boost/rev/249117/arch/Linux/installer/boost-1.48.0-linux-20120208.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/boost-1.45.0-linux-20110604.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>ac6e5b52d5cf13443607c09d8c62b6c5</string>
+              <key>url</key>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/boost-1.48.0-linux-x86_64-20120719.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
           </map>
           <key>windows</key>
           <map>
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>cd1e60a00d40f4475ae5e0aca86f74c1</string>
+              <string>ba3165f8e51c7a59f55c7464932fbfc1</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-boost/rev/249117/arch/CYGWIN/installer/boost-1.48.0-windows-20120208.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/boost-1.45.0-windows-20120704.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -66,9 +78,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>cb04654cdfe93e3c8d16fef0c475e2bb</string>
+              <string>fca72d132adfe24a7a057ad21b9915eb</string>
               <key>url</key>
-              <string>http://s3-proxy.lindenlab.com/private-builds-secondlife-com/hg/repo/3p-pcre/rev/226370/arch/Darwin/installer/pcre-7.6-darwin-20110411.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-darwin-20110504.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -78,12 +90,24 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>18854c815c6f960e22add25cf1ff93d4</string>
+              <string>3372b361e916df8981cb3bd7393b0353</string>
               <key>url</key>
-              <string>http://s3-proxy.lindenlab.com/private-builds-secondlife-com/hg/repo/3p-pcre/rev/226572/arch/Linux/installer/pcre-7.6-linux-20110413.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-linux-20110504.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>be0a9c92b5ab7d6761574b61685d6300</string>
+              <key>url</key>
+              <string>https://bitbucket.org/Siana/singularityviewer/downloads/pcre-7.6-linux-x86_64-20120715.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
           </map>
         </map>
       </map>
