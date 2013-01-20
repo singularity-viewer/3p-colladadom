@@ -32,8 +32,12 @@ libOpts += -mno-cygwin
 endif
 
 ifeq ($(os),linux)
+ifeq ($(arch),x64)
+ccFlags += -m64
+else
 #enforce 32-bit builds, even when building on 64-bit machines
 ccFlags += -m32
+endif
 endif
 
 ifeq ($(colladaVersion),1.4)

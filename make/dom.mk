@@ -25,12 +25,11 @@ includeOpts += -Iexternal-libs/libxml2/include
 libOpts += -Lexternal-libs/libxml2/$(buildID)/lib -lxml2 -lws2_32 -lz
 else
 ifeq ($(os),linux)
-includeOpts += -Iexternal-libs/libxml2/include
-libOpts += -Lexternal-libs/libxml2/$(buildID)/lib -lxml2
+includeOpts += -I$(packageprefix)/include/libxml2
 else
 includeOpts += -I/usr/include/libxml2
-libOpts += -lxml2
 endif
+libOpts += -lxml2
 endif
 endif
 
@@ -44,20 +43,20 @@ endif
 ifeq ($(os),windows)
 ccFlags += -DPCRE_STATIC
 else
-includeOpts += -Istage/packages/include/pcre
-libOpts += $(addprefix stage/packages/lib/release/,libpcrecpp.a libpcre.a )
+includeOpts += -I$(packageprefix)/include/pcre
+libOpts += $(addprefix $(packageprefix)/lib/release/,libpcrecpp.a libpcre.a )
 endif
 
 # For mingw: add boost
 ifneq ($(findstring $(os),linux mac),)
-includeOpts += -Istage/packages/include
+includeOpts += -I$(packageprefix)/include
 ifeq ($(conf),debug)
 debug_suffix = "-d"
 else
 debug_suffix = ""
 endif
-libOpts += stage/packages/lib/$(conf)/libboost_system-mt$(debug_suffix).a
-libOpts += stage/packages/lib/$(conf)/libboost_filesystem-mt$(debug_suffix).a 
+libOpts += $(packageprefix)/lib/$(conf)/libboost_system-mt$(debug_suffix).a
+libOpts += $(packageprefix)/lib/$(conf)/libboost_filesystem-mt$(debug_suffix).a 
 endif
 
 # minizip

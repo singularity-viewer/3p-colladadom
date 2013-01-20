@@ -58,51 +58,41 @@ case "$AUTOBUILD_PLATFORM" in
 				"$libdir/lib/release/libminizip.a"
 		;;
         "linux")
+	    export MAKEFLAGS="-j8"
 	    export LDFLAGS=-m32
-	    export CFLAGS=-m32
-	    export CXXFLAGS=-m32
-	    export CXX=g++-4.1
-	    export CC=gcc-4.1
-			libdir="$top/stage"
-            mkdir -p "$libdir"/lib/{debug,release}
-			make 
+	    prefix="$top/stage/libraries/i686-linux"
+	    libdir="$prefix/lib"
+            mkdir -p "$libdir"/{debug,release}
+	    make arch=x86 packageprefix="stage/packages/libraries/i686-linux"
 
-			cp "build/linux-1.4/libcollada14dom.so" \
-				"$libdir/lib/release/libcollada14dom.so"
-			cp "build/linux-1.4/libcollada14dom.so.2" \
-				"$libdir/lib/release/libcollada14dom.so.2"
-			cp "build/linux-1.4/libcollada14dom.so.2.2" \
-				"$libdir/lib/release/libcollada14dom.so.2.2"
-			cp "build/linux-1.4/libcollada14dom.a" \
-				"$libdir/lib/release/libcollada14dom.a"
-			cp "build/linux-1.4/libminizip.so" \
-				"$libdir/lib/release/libminizip.so"
-			cp "build/linux-1.4/libminizip.a" \
-				"$libdir/lib/release/libminizip.a"
+	    mkdir -p "$prefix/include/collada"
+	    cp -R include/* "$prefix/include/collada"
+	    for lib in libcollada14dom.so libcollada14dom.so.2 libcollada14dom.so.2.2 libminizip.so libminizip.so.1 libminizip.so.1.2.3; do
+		cp -d "build/linux-1.4/$lib" "$libdir/release"
+		cp -d "build/linux-1.4-d/$lib" "$libdir/debug"
+	    done
+        ;;
+        "linux64")
+	    export MAKEFLAGS="-j8"
+	    export LDFLAGS=-m64
+	    prefix="$top/stage/libraries/x86_64-linux"
+	    libdir="$prefix/lib"
+            mkdir -p "$libdir"/{debug,release}
+	    make arch=x64 packageprefix="stage/packages/libraries/x86_64-linux"
 
-
-			cp "build/linux-1.4-d/libcollada14dom-d.so" \
-				"$libdir/lib/debug/libcollada14dom-d.so"
-			cp "build/linux-1.4-d/libcollada14dom-d.so.2" \
-				"$libdir/lib/debug/libcollada14dom-d.so.2"
-			cp "build/linux-1.4-d/libcollada14dom-d.so.2.2" \
-				"$libdir/lib/debug/libcollada14dom-d.so.2.2"
-			cp "build/linux-1.4-d/libcollada14dom-d.a" \
-				"$libdir/lib/debug/libcollada14dom-d.a"
-			cp "build/linux-1.4-d/libminizip-d.so" \
-				"$libdir/lib/debug/libminizip-d.so"
-			cp "build/linux-1.4-d/libminizip-d.a" \
-				"$libdir/lib/debug/libminizip-d.a"
+	    mkdir -p "$prefix/include/collada"
+	    cp -R include/* "$prefix/include/collada"
+	    for lib in libcollada14dom.so libcollada14dom.so.2 libcollada14dom.so.2.2 libminizip.so libminizip.so.1 libminizip.so.1.2.3; do
+		cp -d "build/linux-1.4/$lib" "$libdir/release"
+		cp -d "build/linux-1.4-d/${lib/\.so/-d.so}" "$libdir/debug"
+	    done
         ;;
 
 esac
-mkdir -p "stage/include/collada"
-cp -R include/* "stage/include/collada"
 mkdir -p stage/LICENSES
 cp "license.txt" "stage/LICENSES/collada.txt"
 mkdir -p stage/LICENSES/collada-other
-cp "license/minizip-license.txt" "stage/LICENSES/minizip.txt"
-cp "license/tinyxml-license.txt" "stage/LICENSES/tinyxml.txt"
+cp "license/minizip-license.txt" "stage/LICENSES/collada-other/minizip.txt"
 
 pass
 

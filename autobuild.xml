@@ -63,6 +63,42 @@
           </map>
         </map>
       </map>
+      <key>libxml</key>
+      <map>
+        <key>license</key>
+        <string>mit</string>
+        <key>license_file</key>
+        <string>LICENSES/libxml2.txt</string>
+        <key>name</key>
+        <string>libxml</string>
+        <key>platforms</key>
+        <map>
+          <key>linux</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>899ff969b1a82a6eea6b3ec85185942f</string>
+              <key>url</key>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/libxml-2.6.24-linux-20101013.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux</string>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>9bf2223e26eb4d659fe8e9283bfe73a2</string>
+              <key>url</key>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/libxml2-2.7.8-linux-x86_64-20120420.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
+          </map>
+        </map>
+      </map>
       <key>pcre</key>
       <map>
         <key>license</key>
@@ -146,7 +182,6 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>include/collada</string>
             <string>LICENSES/collada.txt</string>
             <string>LICENSES/collada-other/*.txt</string>
           </array>
@@ -213,13 +248,44 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/debug/*.so*</string>
-            <string>lib/debug/*a</string>
-            <string>lib/release/*.so*</string>
-            <string>lib/release/*.a</string>
+	    <string>libraries/i686-linux/include/collada</string>
+            <string>libraries/i686-linux/lib/debug/*.so*</string>
+            <string>libraries/i686-linux/lib/release/*.so*</string>
           </array>
           <key>name</key>
           <string>linux</string>
+        </map>
+        <key>linux64</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>RelWithDebInfo</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>build-cmd.sh</string>
+                </array>
+                <key>command</key>
+                <string>bash</string>
+              </map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>RelWithDebInfo</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+	    <string>libraries/x86_64-linux/include/collada</string>
+            <string>libraries/x86_64-linux/lib/debug/*.so*</string>
+            <string>libraries/x86_64-linux/lib/release/*.so*</string>
+          </array>
+          <key>name</key>
+          <string>linux64</string>
         </map>
         <key>windows</key>
         <map>
