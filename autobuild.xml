@@ -121,6 +121,30 @@
             <key>name</key>
             <string>darwin</string>
           </map>
+          <key>linux</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>3372b361e916df8981cb3bd7393b0353</string>
+              <key>url</key>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-linux-20110504.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux</string>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>be0a9c92b5ab7d6761574b61685d6300</string>
+              <key>url</key>
+              <string>https://bitbucket.org/Siana/singularityviewer/downloads/pcre-7.6-linux-x86_64-20120715.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
+          </map>
         </map>
       </map>
     </map>
@@ -224,7 +248,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>libraries/i686-linux/include/collada</string>
+	    <string>libraries/i686-linux/include/collada</string>
             <string>libraries/i686-linux/lib/debug/*.so*</string>
             <string>libraries/i686-linux/lib/release/*.so*</string>
           </array>
@@ -256,7 +280,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>libraries/x86_64-linux/include/collada</string>
+	    <string>libraries/x86_64-linux/include/collada</string>
             <string>libraries/x86_64-linux/lib/debug/*.so*</string>
             <string>libraries/x86_64-linux/lib/release/*.so*</string>
           </array>

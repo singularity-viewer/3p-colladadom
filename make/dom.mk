@@ -43,12 +43,8 @@ endif
 ifeq ($(os),windows)
 ccFlags += -DPCRE_STATIC
 else
-ifeq ($(os),linux)
-libOpts += -lpcrecpp
-else
 includeOpts += -I$(packageprefix)/include/pcre
 libOpts += $(addprefix $(packageprefix)/lib/release/,libpcrecpp.a libpcre.a )
-endif
 endif
 
 # For mingw: add boost
