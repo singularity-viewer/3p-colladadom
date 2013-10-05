@@ -69,7 +69,7 @@ case "$AUTOBUILD_PLATFORM" in
 	    cp -R include/* "$prefix/include/collada"
 	    for lib in libcollada14dom.so libcollada14dom.so.2 libcollada14dom.so.2.2 libminizip.so libminizip.so.1 libminizip.so.1.2.3; do
 		cp -d "build/linux-1.4/$lib" "$libdir/release"
-		cp -d "build/linux-1.4-d/$lib" "$libdir/debug"
+		cp -d "build/linux-1.4-d/${lib/\.so/-d.so}" "$libdir/debug"
 	    done
         ;;
         "linux64")
