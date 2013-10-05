@@ -29,7 +29,7 @@ includeOpts += -I$(packageprefix)/include/libxml2
 else
 includeOpts += -I/usr/include/libxml2
 endif
-libOpts += -lxml2
+libOpts += -L$(packageprefix)/lib/release -lxml2
 endif
 endif
 
