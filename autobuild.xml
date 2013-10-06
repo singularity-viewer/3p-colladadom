@@ -213,12 +213,13 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/debug/*.a</string>
-            <string>lib/debug/*.dylib</string>
-            <string>lib/debug/*.framework</string>
-            <string>lib/release/*.a</string>
-            <string>lib/release/*.dylib</string>
-            <string>lib/release/*.framework</string>
+	    <string>libraries/universal-darwin/include/collada</string>
+            <string>libraries/universal-darwin/lib/debug/*.a</string>
+            <string>libraries/universal-darwin/lib/debug/*.dylib</string>
+            <string>libraries/universal-darwin/lib/debug/*.framework</string>
+            <string>libraries/universal-darwin/lib/release/*.a</string>
+            <string>libraries/universal-darwin/lib/release/*.dylib</string>
+            <string>libraries/universal-darwin/lib/release/*.framework</string>
           </array>
           <key>name</key>
           <string>darwin</string>

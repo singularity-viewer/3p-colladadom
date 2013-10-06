@@ -48,22 +48,28 @@ case "$AUTOBUILD_PLATFORM" in
         
     ;;
         "darwin")
-			libdir="$top/stage"
-            mkdir -p "$libdir"/lib/{debug,release}
-			make
 
-			install_name_tool -id "@executable_path/../Resources/libcollada14dom-d.dylib" "build/mac-1.4-d/libcollada14dom-d.dylib" 
-			install_name_tool -id "@executable_path/../Resources/libcollada14dom.dylib" "build/mac-1.4/libcollada14dom.dylib" 
+	prefix="$top/stage/libraries/universal-darwin"
+	libdir="$prefix/lib"
+        mkdir -p "$libdir"/{debug,release}
+	make -j6 packageprefix=stage/packages/libraries/universal-darwin
 
-			cp "build/mac-1.4-d/libcollada14dom-d.dylib" \
-				"$libdir/lib/debug/libcollada14dom-d.dylib"
-			cp "build/mac-1.4-d/libminizip-d.a" \
-				"$libdir/lib/debug/libminizip-d.a"
+	mkdir -p "$prefix/include/collada"
+	cp -R include/* "$prefix/include/collada"
 
-			cp "build/mac-1.4/libcollada14dom.dylib" \
-				"$libdir/lib/release/libcollada14dom.dylib"
-			cp "build/mac-1.4/libminizip.a" \
-				"$libdir/lib/release/libminizip.a"
+
+	install_name_tool -id "@executable_path/../Resources/libcollada14dom-d.dylib" "build/mac-1.4-d/libcollada14dom-d.dylib" 
+	install_name_tool -id "@executable_path/../Resources/libcollada14dom.dylib" "build/mac-1.4/libcollada14dom.dylib" 
+
+	cp "build/mac-1.4-d/libcollada14dom-d.dylib" \
+	    "$libdir/debug/libcollada14dom-d.dylib"
+	cp "build/mac-1.4-d/libminizip-d.a" \
+	    "$libdir/debug/libminizip-d.a"
+
+	cp "build/mac-1.4/libcollada14dom.dylib" \
+	    "$libdir/release/libcollada14dom.dylib"
+	cp "build/mac-1.4/libminizip.a" \
+	    "$libdir/release/libminizip.a"
 		;;
         "linux")
 	    export MAKEFLAGS="-j8"

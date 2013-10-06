@@ -47,6 +47,10 @@ includeOpts += -I$(packageprefix)/include/pcre
 libOpts += $(addprefix $(packageprefix)/lib/release/,libpcrecpp.a libpcre.a )
 endif
 
+ifeq ($(os),mac)
+includeOpts += -I$(packageprefix)/include
+endif
+
 # For mingw: add boost
 ifneq ($(findstring $(os),linux mac),)
 includeOpts += -I$(packageprefix)/include
