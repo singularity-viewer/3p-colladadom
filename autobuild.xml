@@ -54,9 +54,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>eb13ff93db50d4b08648a5c78ba05310</string>
+              <string>cd1e60a00d40f4475ae5e0aca86f74c1</string>
               <key>url</key>
-              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/boost-1.52.0-windows-20130221.tar.bz2</string>
+              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-boost/rev/249117/arch/CYGWIN/installer/boost-1.48.0-windows-20120208.tar.bz2</string>
             </map>
             <key>name</key>
             <string>windows</string>
@@ -312,10 +312,11 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/debug/*.lib</string>
-            <string>lib/debug/*.dll</string>
-            <string>lib/release/*.lib</string>
-            <string>lib/release/*.dll</string>
+            <string>libraries/i686-win32/include/collada</string>
+            <string>libraries/i686-win32/lib/debug/*.lib</string>
+            <string>libraries/i686-win32/lib/debug/*.dll</string>
+            <string>libraries/i686-win32/lib/release/*.lib</string>
+            <string>libraries/i686-win32/lib/release/*.dll</string>
           </array>
           <key>name</key>
           <string>windows</string>

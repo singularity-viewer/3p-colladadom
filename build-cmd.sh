@@ -26,17 +26,25 @@ case "$AUTOBUILD_PLATFORM" in
     "windows")
         build_sln "projects/vc10-1.4/dom.sln" "Debug|Win32"
         build_sln "projects/vc10-1.4/dom.sln" "Release|Win32"
+
+        prefix="$top/stage/libraries/i686-win32"
         
-		mkdir -p stage/lib/{debug,release}
-		cp "build/vc10-1.4-d/libcollada14dom22-d.lib" \
-				"stage/lib/debug/libcollada14dom22-d.lib"
-		cp "build/vc10-1.4-d/libcollada14dom22-d.dll" \
-				"stage/lib/debug/libcollada14dom22-d.dll"
-				
-		cp "build/vc10-1.4/libcollada14dom22.lib" \
-				"stage/lib/release/libcollada14dom22.lib"
-		cp "build/vc10-1.4/libcollada14dom22.dll" \
-				"stage/lib/release/libcollada14dom22.dll"			
+        mkdir -p "$prefix/include/collada"
+        cp -R include/* "$prefix/include/collada"
+
+        libdir="$prefix/lib"
+        mkdir -p "$libdir"/{debug,release}
+                
+        mkdir -p $prefix/lib/{debug,release}
+        cp "build/vc10-1.4-d/libcollada14dom22-d.lib" \
+                        "$prefix/lib/debug/libcollada14dom22-d.lib"
+        cp "build/vc10-1.4-d/libcollada14dom22-d.dll" \
+                        "$prefix/lib/debug/libcollada14dom22-d.dll"
+                        
+        cp "build/vc10-1.4/libcollada14dom22.lib" \
+                        "$prefix/lib/release/libcollada14dom22.lib"
+        cp "build/vc10-1.4/libcollada14dom22.dll" \
+                        "$prefix/lib/release/libcollada14dom22.dll"			
         
     ;;
         "darwin")
