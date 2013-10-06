@@ -126,9 +126,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>3372b361e916df8981cb3bd7393b0353</string>
+              <string>a561ed0ef937f3086ba3f84f2e59b1b2</string>
               <key>url</key>
-              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-linux-20110504.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-linux-20130216.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
@@ -138,9 +138,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>be0a9c92b5ab7d6761574b61685d6300</string>
+              <string>272bd861a7ff9f77e6908064cf52e4cf</string>
               <key>url</key>
-              <string>https://bitbucket.org/Siana/singularityviewer/downloads/pcre-7.6-linux-x86_64-20120715.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-linux64-20130216.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux64</string>
@@ -213,7 +213,7 @@
           </map>
           <key>manifest</key>
           <array>
-	    <string>libraries/universal-darwin/include/collada</string>
+            <string>libraries/universal-darwin/include/collada</string>
             <string>libraries/universal-darwin/lib/debug/*.a</string>
             <string>libraries/universal-darwin/lib/debug/*.dylib</string>
             <string>libraries/universal-darwin/lib/debug/*.framework</string>
@@ -249,7 +249,7 @@
           </map>
           <key>manifest</key>
           <array>
-	    <string>libraries/i686-linux/include/collada</string>
+            <string>libraries/i686-linux/include/collada</string>
             <string>libraries/i686-linux/lib/debug/*.so*</string>
             <string>libraries/i686-linux/lib/release/*.so*</string>
           </array>
@@ -281,7 +281,7 @@
           </map>
           <key>manifest</key>
           <array>
-	    <string>libraries/x86_64-linux/include/collada</string>
+            <string>libraries/x86_64-linux/include/collada</string>
             <string>libraries/x86_64-linux/lib/debug/*.so*</string>
             <string>libraries/x86_64-linux/lib/release/*.so*</string>
           </array>
