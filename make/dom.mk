@@ -10,6 +10,10 @@ src += $(wildcard src/$(colladaVersion)/dom/*.cpp)
 
 includeOpts := -Iinclude -Iinclude/$(colladaVersion)
 
+ifeq ($(os),linux)
+libOpts += -Wl,--exclude-libs,ALL
+endif
+
 ifneq ($(findstring $(os),linux mac),)
 ccFlags += -fPIC
 else 
