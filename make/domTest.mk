@@ -55,13 +55,7 @@ endif
 endif
 
 # Boost defs
-ifeq ($(os),linux)
 libOpts += -lboost_filesystem
-else
-includeOpts += -Iexternal-libs/boost
-libOpts += external-libs/boost/lib/$(buildID)/libboost_system.a
-libOpts += external-libs/boost/lib/$(buildID)/libboost_filesystem.a
-endif
 ifeq ($(os),ps3)
 # PS3 doesn't support C++ locales, so tell boost not to use them
 ccFlags += -DBOOST_NO_STD_LOCALE

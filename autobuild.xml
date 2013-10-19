@@ -18,9 +18,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>0c4678ac85395f5f5294b63da1d79007</string>
+              <string>b31c495d5e77daa09394b370fc228312</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-boost/rev/249117/arch/Darwin/installer/boost-1.48.0-darwin-20120208.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/boost-1.52.0-darwin-20130221.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -30,12 +30,24 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>848766eac189e0fa785f4a025532acd9</string>
+              <string>c11e7bd8c35401f240338ebea5390499</string>
               <key>url</key>
-              <string>http://automated-builds-secondlife-com.s3.amazonaws.com/hg/repo/3p-boost/rev/249117/arch/Linux/installer/boost-1.48.0-linux-20120208.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/boost-1.52.0-linux-20130222.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>fab1924c7c83c2fb945957b0a9a211e5</string>
+              <key>url</key>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/boost-1.52.0-linux64-20130531.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
           </map>
           <key>windows</key>
           <map>
@@ -63,6 +75,42 @@
           </map>
         </map>
       </map>
+      <key>libxml</key>
+      <map>
+        <key>license</key>
+        <string>mit</string>
+        <key>license_file</key>
+        <string>LICENSES/libxml2.txt</string>
+        <key>name</key>
+        <string>libxml</string>
+        <key>platforms</key>
+        <map>
+          <key>linux</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>899ff969b1a82a6eea6b3ec85185942f</string>
+              <key>url</key>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/libxml-2.6.24-linux-20101013.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux</string>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>9bf2223e26eb4d659fe8e9283bfe73a2</string>
+              <key>url</key>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/libxml2-2.7.8-linux-x86_64-20120420.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
+          </map>
+        </map>
+      </map>
       <key>pcre</key>
       <map>
         <key>license</key>
@@ -78,9 +126,9 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>cb04654cdfe93e3c8d16fef0c475e2bb</string>
+              <string>fca72d132adfe24a7a057ad21b9915eb</string>
               <key>url</key>
-              <string>http://s3-proxy.lindenlab.com/private-builds-secondlife-com/hg/repo/3p-pcre/rev/226370/arch/Darwin/installer/pcre-7.6-darwin-20110411.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-darwin-20110504.tar.bz2</string>
             </map>
             <key>name</key>
             <string>darwin</string>
@@ -90,12 +138,24 @@
             <key>archive</key>
             <map>
               <key>hash</key>
-              <string>18854c815c6f960e22add25cf1ff93d4</string>
+              <string>a561ed0ef937f3086ba3f84f2e59b1b2</string>
               <key>url</key>
-              <string>http://s3-proxy.lindenlab.com/private-builds-secondlife-com/hg/repo/3p-pcre/rev/226572/arch/Linux/installer/pcre-7.6-linux-20110413.tar.bz2</string>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-linux-20130216.tar.bz2</string>
             </map>
             <key>name</key>
             <string>linux</string>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>archive</key>
+            <map>
+              <key>hash</key>
+              <string>272bd861a7ff9f77e6908064cf52e4cf</string>
+              <key>url</key>
+              <string>https://bitbucket.org/SingularityViewer/libraries/downloads/pcre-7.6-linux64-20130216.tar.bz2</string>
+            </map>
+            <key>name</key>
+            <string>linux64</string>
           </map>
         </map>
       </map>
@@ -134,7 +194,6 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>include/collada</string>
             <string>LICENSES/collada.txt</string>
             <string>LICENSES/collada-other/*.txt</string>
           </array>
@@ -166,12 +225,13 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/debug/*.a</string>
-            <string>lib/debug/*.dylib</string>
-            <string>lib/debug/*.framework</string>
-            <string>lib/release/*.a</string>
-            <string>lib/release/*.dylib</string>
-            <string>lib/release/*.framework</string>
+            <string>libraries/universal-darwin/include/collada</string>
+            <string>libraries/universal-darwin/lib/debug/*.a</string>
+            <string>libraries/universal-darwin/lib/debug/*.dylib</string>
+            <string>libraries/universal-darwin/lib/debug/*.framework</string>
+            <string>libraries/universal-darwin/lib/release/*.a</string>
+            <string>libraries/universal-darwin/lib/release/*.dylib</string>
+            <string>libraries/universal-darwin/lib/release/*.framework</string>
           </array>
           <key>name</key>
           <string>darwin</string>
@@ -201,13 +261,44 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/debug/*.so*</string>
-            <string>lib/debug/*a</string>
-            <string>lib/release/*.so*</string>
-            <string>lib/release/*.a</string>
+            <string>libraries/i686-linux/include/collada</string>
+            <string>libraries/i686-linux/lib/debug/*.so*</string>
+            <string>libraries/i686-linux/lib/release/*.so*</string>
           </array>
           <key>name</key>
           <string>linux</string>
+        </map>
+        <key>linux64</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>RelWithDebInfo</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>build-cmd.sh</string>
+                </array>
+                <key>command</key>
+                <string>bash</string>
+              </map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>RelWithDebInfo</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>libraries/x86_64-linux/include/collada</string>
+            <string>libraries/x86_64-linux/lib/debug/*.so*</string>
+            <string>libraries/x86_64-linux/lib/release/*.so*</string>
+          </array>
+          <key>name</key>
+          <string>linux64</string>
         </map>
         <key>windows</key>
         <map>
@@ -234,10 +325,11 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/debug/*.lib</string>
-            <string>lib/debug/*.dll</string>
-            <string>lib/release/*.lib</string>
-            <string>lib/release/*.dll</string>
+            <string>libraries/i686-win32/include/collada</string>
+            <string>libraries/i686-win32/lib/debug/*.lib</string>
+            <string>libraries/i686-win32/lib/debug/*.dll</string>
+            <string>libraries/i686-win32/lib/release/*.lib</string>
+            <string>libraries/i686-win32/lib/release/*.dll</string>
           </array>
           <key>name</key>
           <string>windows</string>

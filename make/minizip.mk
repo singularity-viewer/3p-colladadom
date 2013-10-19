@@ -39,7 +39,6 @@ ifeq ($(os),linux)
 # On Linux we build a static lib and a shared lib
 targets += $(addprefix $(outPath),$(libName)$(debugSuffix).a)
 targets += $(addprefix $(outPath),$(libName)$(debugSuffix).so)
-ccFlags += -m32
 
 else ifeq ($(os),windows)
 # On Windows we build a static lib and a DLL
@@ -47,7 +46,6 @@ else ifeq ($(os),windows)
 windowsLibName := $(libName)
 targets += $(addprefix $(outPath),$(windowsLibName)$(debugSuffix).a)
 targets += $(addprefix $(outPath),$(windowsLibName)$(libVersionNoDots)$(debugSuffix).dll)
-
 
 else ifeq ($(os),mac)
 # On Mac we build a framework

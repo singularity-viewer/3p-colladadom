@@ -44,9 +44,6 @@ CXXFLAGS:= -fno-stack-protector -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN
 LDFLAGS:= -fno-stack-protector -mmacosx-version-min=10.4 -DMAC_OS_X_VERSION_MIN_REQUIRED=1040 -isysroot /Developer/SDKs/MacOSX10.5.sdk
 else ifneq ($(or $(shell uname | grep -i cygwin),$(shell uname | grep -i mingw)),)
 os := windows
-else
-#linux system, ensure we're using gcc-4.1
-CXX:=g++-4.1
 endif
 
 # nativeArch: For internal use. Don't override this, instead override 'arch'.
@@ -98,7 +95,7 @@ $(error Invalid setting os=$(os))
 endif
 
 archs := $(sort $(subst i386,x86,$(arch)))
-ifneq ($(filter-out x86 ppc,$(archs)),)
+ifneq ($(filter-out x86 x64 ppc,$(archs)),)
 $(error Invalid setting arch=$(arch))
 endif
 
