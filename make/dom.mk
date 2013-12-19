@@ -63,8 +63,8 @@ debug_suffix = "-d"
 else
 debug_suffix = ""
 endif
-libOpts += $(packageprefix)/lib/$(conf)/libboost_system-mt$(debug_suffix).a
-libOpts += $(packageprefix)/lib/$(conf)/libboost_filesystem-mt$(debug_suffix).a 
+libOpts += $(packageprefix)/lib/$(conf)/libboost_system-mt$(debug_suffix).so
+libOpts += $(packageprefix)/lib/$(conf)/libboost_filesystem-mt$(debug_suffix).so 
 endif
 
 # minizip
