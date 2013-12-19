@@ -1,0 +1,9 @@
+*.user
+*.suo
+*.sdf
+*.bak
+*~
+build/*
+stage/*
+colladadom-*.tar.bz2
+
